@@ -1,0 +1,20 @@
+{% extends 'userbase.html' %}
+{% block body %}
+
+<h1>CREATE USER</h1>
+<form action="/createuser" method="POST">
+    <table>
+        <tr>
+            <th>Username</th>
+            <th>Password</th>
+        </tr>
+        <tr>
+            <input type="text" name="username">
+            <input type="password" name="password" id="">
+            <input type="submit" value="Create User">
+        </tr>
+    </table>
+</form>
+<a href="/">Return to contents</a>
+
+{% endblock body %}

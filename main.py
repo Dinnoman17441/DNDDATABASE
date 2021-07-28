@@ -38,7 +38,7 @@ def createuser():
         db.session.add(new_user)
         db.session.commit()
         return redirect("/")
-    return render_template('user/usercreate.html')
+    return render_template('usercreate.html')
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -51,7 +51,7 @@ def login():
             return redirect("/")
         else:
             return render_template('userlogin.html', error = 'username or password incorrect')
-    return render_template('user/userlogin.html')
+    return render_template('userlogin.html')
 
 @app.route('/logout')
 def logout():
