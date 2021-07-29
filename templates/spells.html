@@ -1,0 +1,21 @@
+{% extends 'contents.html' %}
+{% block body %}
+
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>School</th>
+        <th>Level</th>
+    </tr>
+    {% for item in spells %}
+        <tr>
+            <th>{{ item.SpellName }}</th>
+            <th>{{ item.school.SchoolName }}</th>
+            <th>{{ item.SpellLevel }}</th>
+        </tr>
+    {% endfor %}
+</table>
+
+
+{% endblock body %}

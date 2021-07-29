@@ -19,8 +19,14 @@
             <li class="navth"><a href="/logout">Logout</a></li>
         </ul>
     </nav>
-
-
-
-    
+    <table>
+        <tr>
+            <th><a href="/spells">Spells</a></th>
+            <th><a href="/items">Items</a></th>
+        </tr>
+    </table>
+    <div class="content">
+        {% block body %}
+        {% endblock body %}
+    </div>
 </body>

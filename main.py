@@ -61,6 +61,20 @@ def logout():
         return redirect('/login', error = 'not currently logged in')
     return redirect('/')
 
+@app.route('/')
+def contents():
+    return render_template('contents.html')
+
+@app.route('/spells')
+def spells():
+    spells = models.Spell.query.all()
+    return render_template('spells.html', spells=spells)
+
+@app.route('/items')
+def items():
+    items = models.Item.query.all()
+    return render_template('items.html', items=items)
+
 if __name__ == "__main__":
     app.run(debug=True)
 
