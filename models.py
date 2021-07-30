@@ -51,3 +51,35 @@ class Source(db.Model):
 
 db.create_all()
 
+'''
+#Adds list of Schools to database on formation
+ABJ = School(SchoolName = "Abjuration")
+CON = School(SchoolName = "Conjuration")
+DIV = School(SchoolName = "Divination")
+ENC = School(SchoolName = "Enchantment")
+EVO = School(SchoolName = "Evocation")
+ILL = School(SchoolName = "Illusion")
+NEC = School(SchoolName = "Necromancy")
+TRA = School(SchoolName = "Transmutation")
+OTH = School(SchoolName = "Other")
+
+#Brute forcing "db.session.add()" because db.session.add(ABJ, CON, DIV, ...) doesn't work :)
+db.session.add(ABJ)
+db.session.add(CON)
+db.session.add(DIV)
+db.session.add(ENC)
+db.session.add(EVO)
+db.session.add(ILL)
+db.session.add(NEC)
+db.session.add(TRA)
+db.session.add(OTH)
+
+#Adds list of Sources to database on formation
+Official = Source(SourceName = "Official")
+Homebrew = Source(SourceName = "Homebrew")
+
+db.session.add(Official)
+db.session.add(Homebrew)
+
+db.session.commit()
+'''

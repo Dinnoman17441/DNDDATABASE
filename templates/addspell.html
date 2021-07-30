@@ -22,10 +22,19 @@
     </datalist>
     <br>
 
+    <label for="school">Spell School</label>
     <input id="school" type="text" name="spell_school" list="schools">
     <datalist id="schools">
         {% for school in schools %}
             <option value="{{ school.SchoolName }}">{{ school.SchoolName }}</option>
+        {% endfor %}
+    </datalist>
+
+    <label for="source">Source</label>
+    <input id="source" type="text" name="spell_source" list="sources">
+    <datalist id="sources">
+        {% for source in sources %}
+            <option value="{{ source.SourceName }}">{{ source.SourceName }}</option>
         {% endfor %}
     </datalist>
 
