@@ -75,6 +75,30 @@ def items():
     items = models.Item.query.all()
     return render_template('items.html', items=items)
 
+@app.route('/addspell', methods = ["GET", "POST"])
+def addspell():
+    schools = models.School.query.all()
+    if request.method == "POST":
+        new_spell_name = request.form["spell_name"]
+        new_spell_level = request.form["spell_level"]
+        new_spell_duration_amount = request.form["spell_duration"]
+        new_spell_duration_unit = request.form["spell_duration_unit"]
+
+        new_spell_duration = new_spell_duration_amount + new_spell_duration_unit
+
+        new_spell = models.Spell(
+            SpellName = new_spell_name,
+            SpellLevel = new_spell_level,
+            Duration = new_spell_duration,
+            owner=current_user(),
+        )
+
+        db.session.add(new_spell)
+        db.session.commit()
+
+        return redirect("/")
+    return render_template('addspell.html', schools=schools)
+
 if __name__ == "__main__":
     app.run(debug=True)
 

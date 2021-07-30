@@ -19,6 +19,13 @@
             <li class="navth"><a href="/logout">Logout</a></li>
         </ul>
     </nav>
+    <div class="addnew">
+        {% if current_user %}
+            <a href="/addspell">Add new spell</a>
+        {% else %}
+            <p>Log in to add new additions</p>
+        {% endif %}
+    </div>
     <table>
         <tr>
             <th><a href="/spells">Spells</a></th>

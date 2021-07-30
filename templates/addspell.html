@@ -1,0 +1,38 @@
+{% extends 'addbase.html' %}
+{% block body %}
+<form action="/addspell" method="POST">
+
+    <label for="name">Spell Name</label>
+    <input id="name" type="text" name="spell_name">
+    <br>
+
+    <label for="level">Spell Level</label>
+    <input id="level" type="number" name="spell_level" min="0" max="9">
+    <br>
+
+    <label for="duration">Spell Duration</label>
+    <input id="duration" type="number" name="spell_duration">
+    
+    <input id="duration_unit" type="text" name="spell_duration_unit" list="duration_units">
+    <datalist id="duration_units">
+        {% set units = ["Instantaneous", "Round(s)", "Minute(s)", "Hour(s)", "Day(s)", "Week(s)", "Month(s)", "Year(s)"] %}
+        {% for unit in units %}
+            <option value="{{ unit }}">{{ unit }}</option>
+        {% endfor %}
+    </datalist>
+    <br>
+
+    <input id="school" type="text" name="spell_school" list="schools">
+    <datalist id="schools">
+        {% for school in schools %}
+            <option value="{{ school.SchoolName }}">{{ school.SchoolName }}</option>
+        {% endfor %}
+    </datalist>
+
+    <input type="submit" value="add">
+</form>
+
+
+
+
+{% endblock body %}
