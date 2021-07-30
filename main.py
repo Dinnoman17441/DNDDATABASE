@@ -1,3 +1,4 @@
+#Imports important stuff
 from flask import Flask, render_template, session, redirect, url_for, request, Blueprint, flash, json
 from random import randint, choice
 from flask_sqlalchemy import SQLAlchemy
@@ -8,11 +9,13 @@ from datetime import datetime
 from config import Config
 import math
 
+#Creates flask app using config from config.py
 app = Flask(__name__)
 app.config.from_object(Config)
 
 db = SQLAlchemy(app)
 
+#Imports models from models.py
 from main import db
 import models
 
@@ -107,6 +110,34 @@ def addspell():
 
         return redirect("/")
     return render_template('addspell.html', schools=schools, sources=sources)
+
+@app.route('/additem', methods = ["GET", "POST"])
+def additem():
+    sources = models.Source.query.all()
+    types = models.Type.query.all()
+    if request.method == "POST":
+        new_item_name = request.form["item_name"]
+        new_item_rarity = request.form["item_rarity"]
+
+        new_item_type = request.form["item_type"]
+        new_item_type_id = models.Type.query.filter_by(TypeName = new_item_type).first()
+
+        new_item_source = request.form["item_source"]
+        new_item_source_id = models.Source.query.filter_by(SourceName = new_item_source).first()
+        
+        new_item = models.Item(
+            ItemName = new_item_name,
+            ItemRarity = new_item_rarity,
+            owner = current_user(),
+            type = new_item_type_id,
+            source = new_item_source_id,
+        )
+
+        db.session.add(new_item)
+        db.session.commit()
+
+        return redirect("/")
+    return render_template('additem.html', sources=sources, types=types)
 
 if __name__ == "__main__":
     app.run(debug=True)

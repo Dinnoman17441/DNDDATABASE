@@ -34,9 +34,11 @@ class Item(db.Model):
     ItemRarity = db.Column(db.String)
 
     OwnerID = db.Column(db.Integer, db.ForeignKey('User.UserID'), nullable=False)
+    TypeID = db.Column(db.Integer, db.ForeignKey('Type.TypeID'), nullable=False)
     SourceID = db.Column(db.Integer, db.ForeignKey('Source.SourceID'), nullable=False)
 
     owner = db.relationship("User", backref="items")
+    type = db.relationship("Type", backref="items")
     source = db.relationship("Source", backref="items")
 
 class School(db.Model):
@@ -44,12 +46,18 @@ class School(db.Model):
     SchoolID = db.Column(db.Integer, primary_key = True)
     SchoolName = db.Column(db.String)
 
+class Type(db.Model):
+    __tablename__ = "Type"
+    TypeID = db.Column(db.Integer, primary_key = True)
+    TypeName = db.Column(db.String)
+
 class Source(db.Model):
     __tablename__ = "Source"
     SourceID = db.Column(db.Integer, primary_key = True)
     SourceName = db.Column(db.String)
 
 db.create_all()
+
 
 '''
 #Adds list of Schools to database on formation
@@ -80,6 +88,17 @@ Homebrew = Source(SourceName = "Homebrew")
 
 db.session.add(Official)
 db.session.add(Homebrew)
+
+#Adds list of Item Types to database on formation
+Weapon = Type(TypeName = "Weapon")
+Armour = Type(TypeName = "Armour")
+Consumable = Type(TypeName = "Consumable")
+Other  = Type(TypeName = "Other")
+
+db.session.add(Weapon)
+db.session.add(Armour)
+db.session.add(Consumable)
+db.session.add(Other)
 
 db.session.commit()
 '''

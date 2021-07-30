@@ -10,7 +10,7 @@
     {% for item in items %}
         <tr>
             <th>{{ item.ItemName }}</th>
-            <th>{{ item.ItemType }}</th>
+            <th>{{ item.type.TypeName }}</th>
             <th>{{ item.ItemRarity }}</th>
         </tr>
     {% endfor %}
