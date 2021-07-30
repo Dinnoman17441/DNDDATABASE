@@ -7,12 +7,18 @@
         <th>Name</th>
         <th>School</th>
         <th>Level</th>
+        <th>View</th>
     </tr>
     {% for item in spells %}
         <tr>
             <th>{{ item.SpellName }}</th>
             <th>{{ item.school.SchoolName }}</th>
             <th>{{ item.SpellLevel }}</th>
+            <td>
+                <form action="/viewspell/{{ item.SpellID }}" method="GET">                    
+                    <input type="submit" value="View">
+                </form>
+            </td>
         </tr>
     {% endfor %}
 </table>

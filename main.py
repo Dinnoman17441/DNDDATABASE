@@ -139,6 +139,12 @@ def additem():
         return redirect("/")
     return render_template('additem.html', sources=sources, types=types)
 
+@app.route('/viewspell/<int:SpellID>', methods = ["GET", "POST"])
+def viewspell(SpellID):
+    if request.method == "GET":
+        spells = models.Spell.query.filter_by(SpellID = SpellID).all()
+    return render_template('viewspell.html', spells=spells)
+
 if __name__ == "__main__":
     app.run(debug=True)
 
