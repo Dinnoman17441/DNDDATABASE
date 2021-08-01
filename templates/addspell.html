@@ -20,6 +20,9 @@
             <option value="{{ unit }}">{{ unit }}</option>
         {% endfor %}
     </datalist>
+    <input type="hidden" name="spell_concentration" value="0">
+    <tr><input type="checkbox" id="concentration" name="spell_concentration" value="1"></tr>
+    <label for="concentration">Concentration</label><br>
     <br>
 
     <label for="school">Spell School</label>
@@ -37,6 +40,12 @@
             <option value="{{ source.SourceName }}">{{ source.SourceName }}</option>
         {% endfor %}
     </datalist>
+    <br>
+
+
+    <label for="desc">Description</label>
+    <textarea id="desc" type="text" name="spell_desc"></textarea>
+    <br>
 
     <input type="submit" value="add">
 </form>

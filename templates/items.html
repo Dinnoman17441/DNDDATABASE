@@ -6,12 +6,18 @@
         <th>Name</th>
         <th>Type</th>
         <th>Rarity</th>
+        <th>View</th>
     </tr>
     {% for item in items %}
         <tr>
             <th>{{ item.ItemName }}</th>
             <th>{{ item.type.TypeName }}</th>
             <th>{{ item.ItemRarity }}</th>
+            <td>
+                <form action="/viewitem/{{ item.ItemID }}" method="GET">                    
+                    <input type="submit" value="View">
+                </form>
+            </td>
         </tr>
     {% endfor %}
 </table>

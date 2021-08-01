@@ -87,6 +87,7 @@ def addspell():
         new_spell_level = request.form["spell_level"]
         new_spell_duration_amount = request.form["spell_duration"]
         new_spell_duration_unit = request.form["spell_duration_unit"]
+        new_spell_concentration = request.form["spell_concentration"]
 
         new_spell_duration = new_spell_duration_amount + new_spell_duration_unit
 
@@ -96,13 +97,17 @@ def addspell():
         new_spell_source = request.form["spell_source"]
         new_spell_source_id = models.Source.query.filter_by(SourceName = new_spell_source).first()
         
+        new_spell_description = request.form["spell_desc"]
+
         new_spell = models.Spell(
             SpellName = new_spell_name,
             SpellLevel = new_spell_level,
             Duration = new_spell_duration,
+            Concentration = new_spell_concentration,
             owner = current_user(),
             school = new_spell_school_id,
             source = new_spell_source_id,
+            Description = new_spell_description,
         )
 
         db.session.add(new_spell)

@@ -7,7 +7,33 @@
 
 
 {% block body %}
+{% for spell in spells %}
+    <h1>{{ spell.SpellName }}</h1>
+    <p>{{ spell.source.SourceName }}</p>
 
-hi
+    {% if spell.SpellLevel == 0 %}
+        <p>{{ spell.school.SchoolName }} Cantrip</p>
+    {% elif spell.SpellLevel == 1 %}
+        <p>{{ spell.SpellLevel }}st-level {{ spell.school.SchoolName }}</p>
+    {% elif spell.SpellLevel == 2 %}
+        <p>{{ spell.SpellLevel }}nd-level {{ spell.school.SchoolName }}</p>
+    {% elif spell.SpellLevel == 3 %}
+        <p>{{ spell.SpellLevel }}rd-level {{ spell.school.SchoolName }}</p>
+    {% else %}
+        <p>{{ spell.SpellLevel }}th-level {{ spell.school.SchoolName }}</p>
+    {% endif %}
+
+    <p><b>Casting Time:</b></p>
+    <p><b>Range:</b></p>
+    <p><b>Components:</b></p>
+
+    {% if spell.Concentration == 0 %}
+        <p><b>Duration:</b> {{ spell.Duration }}</p>
+    {% else %}
+        <p><b>Duration:</b> Concentration, {{ spell.Duration }}</p>
+    {% endif %}
+    
+    <p>{{ spell.Description }}</p>
+{% endfor %}
 
 {% endblock body%}
