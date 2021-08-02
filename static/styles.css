@@ -20,12 +20,12 @@ table {
   padding: 12px 20px;
   box-sizing: border-box;
   border: 2px solid #ccc;
-  border-radius: 4px;
+  border-radius: 4px; 
   background-color: #f8f8f8;
   resize: vertical;
 }
 
-input {
+input, select {
   margin: 8px 0;
   box-sizing: border-box;
   border: 2px solid #ccc;

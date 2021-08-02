@@ -25,7 +25,25 @@
 
     <p><b>Casting Time:</b></p>
     <p><b>Range:</b></p>
-    <p><b>Components:</b></p>
+
+    {% if spell.V == 1 and spell.S == 1 and spell.M == 1 %}
+        <p><b>Components:</b> V, S, M</p>
+    {% elif spell.V == 1 and spell.S == 1 and spell.M == 0 %}
+        <p><b>Components:</b> V, S</p>
+    {% elif spell.V == 1 and spell.S == 0 and spell.M == 1 %}
+        <p><b>Components:</b> V, M</p>
+    {% elif spell.V == 0 and spell.S == 1 and spell.M == 1 %}
+        <p><b>Components:</b> S, M</p>
+    {% elif spell.V == 1 and spell.S == 0 and spell.M == 0 %}
+        <p><b>Components:</b> V</p>
+    {% elif spell.V == 0 and spell.S == 1 and spell.M == 0 %}
+        <p><b>Components:</b> S</p>
+    {% elif spell.V == 0 and spell.S == 0 and spell.M == 1 %}
+        <p><b>Components:</b> M</p>
+    {% else %}
+        <p><b>Components:</b> None</p>
+    {% endif %}
+
 
     {% if spell.Concentration == 0 %}
         <p><b>Duration:</b> {{ spell.Duration }}</p>

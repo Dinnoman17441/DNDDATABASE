@@ -2,54 +2,85 @@
 {% block body %}
 <form action="/addspell" method="POST">
 
-    <label for="name">Spell Name</label>
-    <input id="name" type="text" name="spell_name">
-    <br>
+    <div id="name">
+        <label for="name">Spell Name</label>
+        <input id="name" type="text" name="spell_name">
+        <br>
+    </div>
 
-    <label for="level">Spell Level</label>
-    <input id="level" type="number" name="spell_level" min="0" max="9">
-    <br>
+    <div>
+        <label for="level">Spell Level</label>
+        <input id="level" type="number" name="spell_level" min="0" max="9">
+        <br>
+    </div>
 
-    <label for="duration">Spell Duration</label>
-    <input id="duration" type="number" name="spell_duration">
+    <div>
+        <label for="duration">Spell Duration</label>
+        <input id="duration" type="number" name="spell_duration">
+
+        <input id="duration_unit" type="text" name="spell_duration_unit" list="duration_units">
+        <datalist id="duration_units">
+            {% set units = ["Instantaneous", "Round(s)", "Minute(s)", "Hour(s)", "Day(s)", "Week(s)", "Month(s)", "Year(s)"] %}
+            {% for unit in units %}
+                <option value="{{ unit }}">{{ unit }}</option>
+            {% endfor %}
+        </datalist>
+
+        <table>
+            <input type="hidden" name="spell_concentration" value="0">
+            <tr><input type="checkbox" id="concentration" name="spell_concentration" value="1"></tr>
+            <label for="concentration">Concentration</label>
+        </table>
+    </div>
+
+    <div>
+        <label for="school">Spell School</label>
+        <select id="school" type="text" name="spell_school" list="schools">
+            {% for school in schools %}
+                <option value="{{ school.SchoolName }}">{{ school.SchoolName }}</option>
+            {% endfor %}
+        </select>
+    </div>
     
-    <input id="duration_unit" type="text" name="spell_duration_unit" list="duration_units">
-    <datalist id="duration_units">
-        {% set units = ["Instantaneous", "Round(s)", "Minute(s)", "Hour(s)", "Day(s)", "Week(s)", "Month(s)", "Year(s)"] %}
-        {% for unit in units %}
-            <option value="{{ unit }}">{{ unit }}</option>
-        {% endfor %}
-    </datalist>
+    <div>
+        <label for="source">Source</label>
+        <select id="source" type="text" name="spell_source" list="sources">
+            {% for source in sources %}
+                <option value="{{ source.SourceName }}">{{ source.SourceName }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <br>
+    <div>
+        Components:
+        <br>
+        <table>
+            <input type="hidden" name="v_component" value="0">
+            <tr><input type="checkbox" id="v" name="v_component" value="1"></tr>
+            <label for="v"> (V) Verbal</label>
+            <br>
 
-    <input type="hidden" name="spell_concentration" value="0">
-    <tr><input type="checkbox" id="concentration" name="spell_concentration" value="1"></tr>
-    <label for="concentration">Concentration</label>
+            <input type="hidden" name="s_component" value="0">
+            <tr><input type="checkbox" id="s" name="s_component" value="1"></tr>
+            <label for="s"> (S) Somatic</label>
+
+            <br>
+            <input type="hidden" name="m_component" value="0">
+            <tr><input type="checkbox" id="m" name="m_component" value="1"></tr>
+            <label for="m"> (M) Material</label>
+        </table>
+    </div>
+    <br>
+    <div>
+        <label for="desc">Description</label>
+        <textarea id="desc" type="text" name="spell_desc"></textarea>
+    </div>
     <br>
 
-    <label for="school">Spell School</label>
-    <input id="school" type="text" name="spell_school" list="schools">
-    <datalist id="schools">
-        {% for school in schools %}
-            <option value="{{ school.SchoolName }}">{{ school.SchoolName }}</option>
-        {% endfor %}
-    </datalist>
-
-    <label for="source">Source</label>
-    <input id="source" type="text" name="spell_source" list="sources">
-    <datalist id="sources">
-        {% for source in sources %}
-            <option value="{{ source.SourceName }}">{{ source.SourceName }}</option>
-        {% endfor %}
-    </datalist>
-    <br>
-
-
-    <label for="desc">Description</label>
-    <textarea id="desc" type="text" name="spell_desc"></textarea>
-    <br>
-
-    <input type="submit" value="add">
+    <input type="submit" value="Add">
 </form>
-
+<form action="/spells">
+    <input type="submit" value="Cancel">
+</form>
 
 {% endblock body %}

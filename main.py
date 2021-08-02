@@ -89,7 +89,14 @@ def addspell():
         new_spell_duration_unit = request.form["spell_duration_unit"]
         new_spell_concentration = request.form["spell_concentration"]
 
-        new_spell_duration = new_spell_duration_amount + new_spell_duration_unit
+        new_v = request.form["v_component"]
+        new_s = request.form["s_component"]
+        new_m = request.form["m_component"]
+
+        if new_spell_duration_unit == "Instantaneous":
+            new_spell_duration = new_spell_duration_unit
+        else:
+            new_spell_duration = new_spell_duration_amount + " " + new_spell_duration_unit
 
         new_spell_school = request.form["spell_school"]
         new_spell_school_id = models.School.query.filter_by(SchoolName = new_spell_school).first()
@@ -108,12 +115,15 @@ def addspell():
             school = new_spell_school_id,
             source = new_spell_source_id,
             Description = new_spell_description,
+            V = new_v,
+            S = new_s,
+            M = new_m,
         )
 
         db.session.add(new_spell)
         db.session.commit()
 
-        return redirect("/")
+        return redirect("/spells")
     return render_template('addspell.html', schools=schools, sources=sources)
 
 @app.route('/additem', methods = ["GET", "POST"])
@@ -141,7 +151,7 @@ def additem():
         db.session.add(new_item)
         db.session.commit()
 
-        return redirect("/")
+        return redirect("/items")
     return render_template('additem.html', sources=sources, types=types)
 
 @app.route('/viewspell/<int:SpellID>', methods = ["GET", "POST"])
@@ -150,15 +160,17 @@ def viewspell(SpellID):
         spells = models.Spell.query.filter_by(SpellID = SpellID).all()
     return render_template('viewspell.html', spells=spells)
 
-if __name__ == "__main__":
-    app.run(debug=True)
-
 @app.route('/deletespell/<int:SpellID>', methods = ["GET", "POST"])
 def deletespell(SpellID):
     if request.method == "GET":
         models.Spell.query.filter_by(SpellID = SpellID).delete()
         db.session.commit()
-    return redirect("/")
+    return redirect("/spells")
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
+
 
 # For when git doesn't remember my email (everytime)
 # git config --global user.email "17441@burnside.school.nz"
