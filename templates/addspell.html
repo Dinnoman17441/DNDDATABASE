@@ -20,9 +20,10 @@
             <option value="{{ unit }}">{{ unit }}</option>
         {% endfor %}
     </datalist>
+
     <input type="hidden" name="spell_concentration" value="0">
     <tr><input type="checkbox" id="concentration" name="spell_concentration" value="1"></tr>
-    <label for="concentration">Concentration</label><br>
+    <label for="concentration">Concentration</label>
     <br>
 
     <label for="school">Spell School</label>
@@ -49,8 +50,6 @@
 
     <input type="submit" value="add">
 </form>
-
-
 
 
 {% endblock body %}

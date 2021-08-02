@@ -60,7 +60,7 @@ class Source(db.Model):
 db.create_all()
 
 
-#'''
+'''
 #Adds list of Schools to database on formation
 ABJ = School(SchoolName = "Abjuration")
 CON = School(SchoolName = "Conjuration")

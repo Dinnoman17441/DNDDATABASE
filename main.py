@@ -153,5 +153,12 @@ def viewspell(SpellID):
 if __name__ == "__main__":
     app.run(debug=True)
 
+@app.route('/deletespell/<int:SpellID>', methods = ["GET", "POST"])
+def deletespell(SpellID):
+    if request.method == "GET":
+        models.Spell.query.filter_by(SpellID = SpellID).delete()
+        db.session.commit()
+    return redirect("/")
+
 # For when git doesn't remember my email (everytime)
 # git config --global user.email "17441@burnside.school.nz"

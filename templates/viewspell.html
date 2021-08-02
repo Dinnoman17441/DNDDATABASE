@@ -34,6 +34,14 @@
     {% endif %}
     
     <p>{{ spell.Description }}</p>
+
+    {% if current_user == spell.owner %}
+        <form action="/deletespell/{{ spell.SpellID }}" method="GET">
+            <input type="submit" value="Delete">
+    {% endif %}
+
 {% endfor %}
+
+
 
 {% endblock body%}
