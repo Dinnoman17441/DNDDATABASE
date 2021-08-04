@@ -1,27 +1,31 @@
 {% extends 'contents.html' %}
 {% block body %}
+<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
 
 
-<table>
-    <tr>
-        <th>Name</th>
-        <th>School</th>
-        <th>Level</th>
-        <th>View</th>
-    </tr>
-    {% for item in spells %}
+<table class="sortable" id="spellsTable">
+    <thead>
         <tr>
-            <th>{{ item.SpellName }}</th>
-            <th>{{ item.school.SchoolName }}</th>
-            <th>{{ item.SpellLevel }}</th>
-            <td>
-                <form action="/viewspell/{{ item.SpellID }}" method="GET">                    
-                    <input type="submit" value="View">
-                </form>
-            </td>
+            <th>Name</th>
+            <th>School</th>
+            <th>Level</th>
+            <th>View</th>
         </tr>
-    {% endfor %}
+    </thead>
+    <tbody>
+        {% for item in spells %}
+            <tr class="item">
+                <th>{{ item.SpellName }}</th>
+                <th>{{ item.school.SchoolName }}</th>
+                <th>{{ item.SpellLevel }}</th>
+                <td>
+                    <form action="/viewspell/{{ item.SpellID }}" method="GET">                    
+                        <input type="submit" value="View">
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
 </table>
 
-
-{% endblock body %}
+{% endblock %}

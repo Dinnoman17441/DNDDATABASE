@@ -65,18 +65,17 @@ def logout():
     return redirect('/')
 
 @app.route('/')
+def reroute():
+    return redirect('/spells')
+
+@app.route('/spells')
 def contents():
     return render_template('contents.html')
 
-@app.route('/spells')
-def spells():
-    spells = models.Spell.query.all()
+@app.route('/spells/<int:SourceID>')
+def spells(SourceID):
+    spells = models.Spell.query.filter_by(SourceID=SourceID).all()
     return render_template('spells.html', spells=spells)
-
-@app.route('/items')
-def items():
-    items = models.Item.query.all()
-    return render_template('items.html', items=items)
 
 @app.route('/addspell', methods = ["GET", "POST"])
 def addspell():
@@ -125,34 +124,6 @@ def addspell():
 
         return redirect("/spells")
     return render_template('addspell.html', schools=schools, sources=sources)
-
-@app.route('/additem', methods = ["GET", "POST"])
-def additem():
-    sources = models.Source.query.all()
-    types = models.Type.query.all()
-    if request.method == "POST":
-        new_item_name = request.form["item_name"]
-        new_item_rarity = request.form["item_rarity"]
-
-        new_item_type = request.form["item_type"]
-        new_item_type_id = models.Type.query.filter_by(TypeName = new_item_type).first()
-
-        new_item_source = request.form["item_source"]
-        new_item_source_id = models.Source.query.filter_by(SourceName = new_item_source).first()
-        
-        new_item = models.Item(
-            ItemName = new_item_name,
-            ItemRarity = new_item_rarity,
-            owner = current_user(),
-            type = new_item_type_id,
-            source = new_item_source_id,
-        )
-
-        db.session.add(new_item)
-        db.session.commit()
-
-        return redirect("/items")
-    return render_template('additem.html', sources=sources, types=types)
 
 @app.route('/viewspell/<int:SpellID>', methods = ["GET", "POST"])
 def viewspell(SpellID):

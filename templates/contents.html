@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="=X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
+    <script src="https://www.w3schools.com/lib/w3.js"></script>
     <title>Contents</title>
 </head>
 <body>
@@ -22,15 +23,14 @@
     <div class="addnew">
         {% if current_user %}
             <a href="/addspell">Add new spell</a>
-            <a href="/additem">Add new item</a>
         {% else %}
             <p>Log in to add new additions</p>
         {% endif %}
     </div>
     <table>
         <tr>
-            <th><a href="/spells">Spells</a></th>
-            <th><a href="/items">Items</a></th>
+            <th><a href="/spells/1">Official</a></th>
+            <th><a href="/spells/2">Homebrew</a></th>
         </tr>
     </table>
     <div class="content">
