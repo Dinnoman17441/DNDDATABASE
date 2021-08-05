@@ -2,6 +2,28 @@
 {% block body %}
 <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
 
+<table id="schoolsTable">
+    <tr>
+        <th id="hideschools" colspan="3" onclick="schoolToggle()">Filter by School</th>
+    </tr>
+    <div id="schoolToggle">
+        <tr>
+            <th><a href="/spells/{{ source }}/1">Abjuration</a></th>
+            <th><a href="/spells/{{ source }}/2">Conjuration</a></th>
+            <th><a href="/spells/{{ source }}/3">Divination</a></th>
+        </tr>
+        <tr>
+            <th><a href="/spells/{{ source }}/4">Enchantment</a></th>
+            <th><a href="/spells/{{ source }}/5">Evocation</a></th>
+            <th><a href="/spells/{{ source }}/6">Illusion</a></th>
+        </tr>
+        <tr>
+            <th><a href="/spells/{{ source }}/7">Necromancy</a></th>
+            <th><a href="/spells/{{ source }}/8">Transmutation</a></th>
+            <th><a href="/spells/{{ source }}/9">Other</a></th>
+        </tr>
+    </div>
+</table>
 
 <table class="sortable" id="spellsTable">
     <thead>
@@ -13,13 +35,13 @@
         </tr>
     </thead>
     <tbody>
-        {% for item in spells %}
+        {% for spell in spells %}
             <tr class="item">
-                <th>{{ item.SpellName }}</th>
-                <th>{{ item.school.SchoolName }}</th>
-                <th>{{ item.SpellLevel }}</th>
+                <th>{{ spell.SpellName }}</th>
+                <th>{{ spell.school.SchoolName }}</th>
+                <th>{{ spell.SpellLevel }}</th>
                 <td>
-                    <form action="/viewspell/{{ item.SpellID }}" method="GET">                    
+                    <form action="/viewspell/{{ spell.SpellID }}" method="GET">                    
                         <input type="submit" value="View">
                     </form>
                 </td>
@@ -27,5 +49,16 @@
         {% endfor %}
     </tbody>
 </table>
+
+<script type="text/javascript">
+    function schoolToggle() {
+        var x = document.getElementById("schoolToggle");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
 
 {% endblock %}

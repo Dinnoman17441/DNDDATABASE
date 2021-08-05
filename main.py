@@ -75,7 +75,14 @@ def contents():
 @app.route('/spells/<int:SourceID>')
 def spells(SourceID):
     spells = models.Spell.query.filter_by(SourceID=SourceID).all()
-    return render_template('spells.html', spells=spells)
+    SID = SourceID
+    return render_template('spells.html', spells=spells, source=SID)
+
+@app.route('/spells/<int:SourceID>/<int:SchoolID>')
+def spellssortschool(SourceID, SchoolID):
+    spells = models.Spell.query.filter_by(SourceID=SourceID, SchoolID=SchoolID).all()
+    SID = SourceID
+    return render_template('spells.html', spells=spells, source=SID)
 
 @app.route('/addspell', methods = ["GET", "POST"])
 def addspell():

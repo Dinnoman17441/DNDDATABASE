@@ -39,7 +39,7 @@ ul {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #rgb(209, 209, 209);
+  background-color: rgb(209, 209, 209);
 }
 
 li {
@@ -55,5 +55,9 @@ li a {
 }
 
 li a:hover {
-  background-color: rgb(209, 209, 209);
+  background-color: rgb(165, 165, 165);
+}
+
+#schoolsTable th {
+  text-align: center;
 }
