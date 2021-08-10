@@ -35,35 +35,44 @@ def add_current_user():
 @app.route('/createuser', methods = ['GET', 'POST'])
 def createuser():
     if request.method == "POST":
-        new_username = request.form["username"]
-        new_userpassword = generate_password_hash(request.form.get('password'), salt_length = 10)
-        new_user = models.User(username = new_username, password = new_userpassword)
-        db.session.add(new_user)
-        db.session.commit()
-        return redirect("/")
-    return render_template('usercreate.html')
+        new_username = request.form["username"] #Collects username from form
+        new_userpassword = generate_password_hash(request.form.get('password'), salt_length = 10) #Collects password from form and encrypts it
+        new_user = models.User(username = new_username, password = new_userpassword) #Puts info into a tuple
+        db.session.add(new_user) #Adds info to table
+
+        db.session.commit() #Commits addition
+        return redirect("/") #Redirects user to homepage
+    return render_template('usercreate.html') #This page is loaded when "/createuser" is called
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
+    #If user is currently logged in, instantly redirects them to home
+    #The login button is not displayed when logged in anyway, but the user can type "/login" into the address bar
     if session.get('useron'):
         return redirect('/')
     if request.method == "POST":
         useron = models.User.query.filter(models.User.username == request.form.get('login_username')).first()
+
+        #Checks if username and password are correct
         if useron and check_password_hash(useron.password, request.form.get('login_password')):
             session['useron'] = useron.UserID
             return redirect("/")
         else:
-            return render_template('userlogin.html', error = 'username or password incorrect')
+            #Returns user to the start of the form with an error message if username or password dont match
+            return render_template('userlogin.html', error = 'Username or Password Incorrect')
     return render_template('userlogin.html')
 
 @app.route('/logout')
 def logout():
     try:
+        #Removes the user from the session, logging them out
         session.pop('useron')
     except:
-        return redirect('/login', error = 'not currently logged in')
+        #If the user is not logged in, sends them to the login page
+        return redirect('/login')
     return redirect('/')
 
+#Simple function that redirects users from the default '/' route to the '/spells' route
 @app.route('/')
 def reroute():
     return redirect('/spells')
@@ -89,6 +98,7 @@ def addspell():
     schools = models.School.query.all()
     sources = models.Source.query.all()
     if request.method == "POST":
+        #Collects spell info from form
         new_spell_name = request.form["spell_name"]
         new_spell_level = request.form["spell_level"]
         new_spell_duration_amount = request.form["spell_duration"]
@@ -150,5 +160,7 @@ if __name__ == "__main__":
 
 
 
-# For when git doesn't remember my email (everytime)
-# git config --global user.email "17441@burnside.school.nz"
+# Copy and paste into powershell terminal because school computers dont remember github login
+'''
+git config --global user.email "17441@burnside.school.nz"
+'''

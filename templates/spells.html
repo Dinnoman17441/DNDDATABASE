@@ -6,23 +6,21 @@
     <tr>
         <th id="hideschools" colspan="3" onclick="schoolToggle()">Filter by School</th>
     </tr>
-    <div id="schoolToggle">
-        <tr>
-            <th><a href="/spells/{{ source }}/1">Abjuration</a></th>
-            <th><a href="/spells/{{ source }}/2">Conjuration</a></th>
-            <th><a href="/spells/{{ source }}/3">Divination</a></th>
-        </tr>
-        <tr>
-            <th><a href="/spells/{{ source }}/4">Enchantment</a></th>
-            <th><a href="/spells/{{ source }}/5">Evocation</a></th>
-            <th><a href="/spells/{{ source }}/6">Illusion</a></th>
-        </tr>
-        <tr>
-            <th><a href="/spells/{{ source }}/7">Necromancy</a></th>
-            <th><a href="/spells/{{ source }}/8">Transmutation</a></th>
-            <th><a href="/spells/{{ source }}/9">Other</a></th>
-        </tr>
-    </div>
+    <tr id="toggleCheck" class="schoolToggle" style="display: none;">
+        <th><a href="/spells/{{ source }}/1">Abjuration</a></th>
+        <th><a href="/spells/{{ source }}/2">Conjuration</a></th>
+        <th><a href="/spells/{{ source }}/3">Divination</a></th>
+    </tr>
+    <tr class="schoolToggle" style="display: none;">
+        <th><a href="/spells/{{ source }}/4">Enchantment</a></th>
+        <th><a href="/spells/{{ source }}/5">Evocation</a></th>
+        <th><a href="/spells/{{ source }}/6">Illusion</a></th>
+    </tr>
+    <tr class="schoolToggle" style="display: none;">
+        <th><a href="/spells/{{ source }}/7">Necromancy</a></th>
+        <th><a href="/spells/{{ source }}/8">Transmutation</a></th>
+        <th><a href="/spells/{{ source }}/9">Other</a></th>
+    </tr>
 </table>
 
 <table class="sortable" id="spellsTable">
@@ -52,11 +50,15 @@
 
 <script type="text/javascript">
     function schoolToggle() {
-        var x = document.getElementById("schoolToggle");
-        if (x.style.display === "none") {
-            x.style.display = "block";
+        var elems = document.getElementsByClassName('schoolToggle');
+        if (document.getElementById('toggleCheck').style.display === 'none'){
+            for (var i=0;i<elems.length;i+=1){
+                elems[i].style.display = 'table-row';
+            }
         } else {
-            x.style.display = "none";
+            for (var i=0;i<elems.length;i+=1){
+                elems[i].style.display = 'none';
+            }
         }
     }
 </script>
