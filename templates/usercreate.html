@@ -2,6 +2,7 @@
 {% block body %}
 
 <h1>CREATE USER</h1>
+<desc style="color: red;">{{ error }}</desc>
 <form action="/createuser" method="POST">
     <table>
         <tr>

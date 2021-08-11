@@ -1,0 +1,8 @@
+0.2.1
+Sprint Two | Commit 1
+
+- Added username character max(16) and min(4)
+- Added a check when creating an account, usernames can no longer be the same as existing usernames
+- Added a password min of 7 characters
+- Changed a redirect after creating user that takes them to the login page instead of the home page
+- Added error messages to usercreate.html

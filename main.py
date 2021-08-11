@@ -35,13 +35,29 @@ def add_current_user():
 @app.route('/createuser', methods = ['GET', 'POST'])
 def createuser():
     if request.method == "POST":
-        new_username = request.form["username"] #Collects username from form
-        new_userpassword = generate_password_hash(request.form.get('password'), salt_length = 10) #Collects password from form and encrypts it
-        new_user = models.User(username = new_username, password = new_userpassword) #Puts info into a tuple
-        db.session.add(new_user) #Adds info to table
+        if 4 > len(request.form.get('username')) > 16:
+        #If the length of the username is less than 4 characters or more than 16 characters: 
+            return render_template('usercreate.html', error='Username must be between 4 and 16 characters in length')
+            #The user will fail to be created and will be returned with an error telling them why
 
-        db.session.commit() #Commits addition
-        return redirect("/") #Redirects user to homepage
+        elif models.User.query.filter(models.User.username == request.form.get('username')).first():
+        #Checks if the new username already exists, if so:
+            return render_template('usercreate.html', error = 'Username already in use')
+            #The user will fail to be created and will be returned with an error telling them why
+
+        elif len(request.form.get('password')) < 7:
+        #If the length of the password is less than 7 characters:
+            return render_template('usercreate.html', error = 'Password must be a minimum of 7 characters') 
+            #The user will fail to be created and will be returned with an error telling them why
+
+        else:
+            new_username = request.form["username"] #Collects username from form and puts it into variable
+            new_userpassword = generate_password_hash(request.form.get('password'), salt_length = 10) #Collects password from form, encrypts it, and puts it into variable
+            new_user = models.User(username = new_username, password = new_userpassword) #Puts info into a list 
+            db.session.add(new_user) #Adds info to table
+            db.session.commit() #Commits addition
+
+            return render_template("userlogin.html", new_user=new_user) #Redirects user to login page with their username already filled in
     return render_template('usercreate.html') #This page is loaded when "/createuser" is called
 
 @app.route('/login', methods = ['GET', 'POST'])
@@ -69,7 +85,7 @@ def logout():
         session.pop('useron')
     except:
         #If the user is not logged in, sends them to the login page
-        return redirect('/login')
+        return render_template('userlogin.html', error='Not currently logged in')
     return redirect('/')
 
 #Simple function that redirects users from the default '/' route to the '/spells' route

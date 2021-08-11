@@ -7,15 +7,16 @@
     <table>
         <tr>
             <label for="username">Username: </label>
-            <input type="text" name="login_username" id="username">
+            <input type="text" name="login_username" id="username" value="{{new_user.username}}">
             <br>
             <label for="password">Password: </label>
             <input type="password" name="login_password" id="password">
             <br>
             <input type="submit" value="Login">
         </tr>
-       </table>
+    </table>
 </form>
+<a href="/createuser">Create Account</a>
 <a href="/">Return to contents</a>
 
 {% endblock body %}
