@@ -76,7 +76,7 @@ def login():
         else:
             #Returns user to the start of the form with an error message if username or password dont match
             return render_template('userlogin.html', error = 'Username or Password Incorrect')
-    return render_template('userlogin.html')
+    return render_template('userlogin.html', new_user="")
 
 @app.route('/logout')
 def logout():
@@ -85,7 +85,7 @@ def logout():
         session.pop('useron')
     except:
         #If the user is not logged in, sends them to the login page
-        return render_template('userlogin.html', error='Not currently logged in')
+        return render_template('userlogin.html', error='Not currently logged in', new_user="")
     return redirect('/')
 
 #Simple function that redirects users from the default '/' route to the '/spells' route
@@ -113,49 +113,53 @@ def spellssortschool(SourceID, SchoolID):
 def addspell():
     schools = models.School.query.all()
     sources = models.Source.query.all()
-    if request.method == "POST":
-        #Collects spell info from form
-        new_spell_name = request.form["spell_name"]
-        new_spell_level = request.form["spell_level"]
-        new_spell_duration_amount = request.form["spell_duration"]
-        new_spell_duration_unit = request.form["spell_duration_unit"]
-        new_spell_concentration = request.form["spell_concentration"]
+    if session.get('useron'):
+        if request.method == "POST":
+            #Collects spell info from form
+            new_spell_name = request.form["spell_name"]
+            new_spell_level = request.form["spell_level"]
+            new_spell_duration_amount = request.form["spell_duration"]
+            new_spell_duration_unit = request.form["spell_duration_unit"]
+            new_spell_concentration = request.form["spell_concentration"]
 
-        new_v = request.form["v_component"]
-        new_s = request.form["s_component"]
-        new_m = request.form["m_component"]
+            new_v = request.form["v_component"]
+            new_s = request.form["s_component"]
+            new_m = request.form["m_component"]
 
-        if new_spell_duration_unit == "Instantaneous":
-            new_spell_duration = new_spell_duration_unit
-        else:
-            new_spell_duration = new_spell_duration_amount + " " + new_spell_duration_unit
+            if new_spell_duration_unit == "Instantaneous":
+                new_spell_duration = new_spell_duration_unit
+            else:
+                new_spell_duration = new_spell_duration_amount + " " + new_spell_duration_unit
 
-        new_spell_school = request.form["spell_school"]
-        new_spell_school_id = models.School.query.filter_by(SchoolName = new_spell_school).first()
+            new_spell_school = request.form["spell_school"]
+            new_spell_school_id = models.School.query.filter_by(SchoolName = new_spell_school).first()
 
-        new_spell_source = request.form["spell_source"]
-        new_spell_source_id = models.Source.query.filter_by(SourceName = new_spell_source).first()
-        
-        new_spell_description = request.form["spell_desc"]
+            new_spell_source = request.form["spell_source"]
+            new_spell_source_id = models.Source.query.filter_by(SourceName = new_spell_source).first()
+            
+            new_spell_description = request.form["spell_desc"]
 
-        new_spell = models.Spell(
-            SpellName = new_spell_name,
-            SpellLevel = new_spell_level,
-            Duration = new_spell_duration,
-            Concentration = new_spell_concentration,
-            owner = current_user(),
-            school = new_spell_school_id,
-            source = new_spell_source_id,
-            Description = new_spell_description,
-            V = new_v,
-            S = new_s,
-            M = new_m,
-        )
+            new_spell = models.Spell(
+                SpellName = new_spell_name,
+                SpellLevel = new_spell_level,
+                Duration = new_spell_duration,
+                Concentration = new_spell_concentration,
+                owner = current_user(),
+                school = new_spell_school_id,
+                source = new_spell_source_id,
+                Description = new_spell_description,
+                V = new_v,
+                S = new_s,
+                M = new_m,
+            )
 
-        db.session.add(new_spell)
-        db.session.commit()
+            db.session.add(new_spell)
+            db.session.commit()
 
-        return redirect("/spells")
+            return redirect("/spells")
+    else:
+        return render_template('userlogin.html', error='Not currently logged in', new_user="")
+        #If the user is not logged in, sends them to the login page. This will only happen if they manually type /addspell
     return render_template('addspell.html', schools=schools, sources=sources)
 
 @app.route('/viewspell/<int:SpellID>', methods = ["GET", "POST"])

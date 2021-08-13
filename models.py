@@ -28,6 +28,7 @@ class Spell(db.Model):
     school = db.relationship("School", backref="spells")
     source = db.relationship("Source", backref="spells")
 
+'''
 class Item(db.Model):
     __tablename__ = "Item"
     ItemID = db.Column(db.Integer, primary_key = True)
@@ -43,16 +44,19 @@ class Item(db.Model):
     owner = db.relationship("User", backref="items")
     type = db.relationship("Type", backref="items")
     source = db.relationship("Source", backref="items")
+'''
 
 class School(db.Model):
     __tablename__ = "School"
     SchoolID = db.Column(db.Integer, primary_key = True)
     SchoolName = db.Column(db.String)
 
+'''
 class Type(db.Model):
     __tablename__ = "Type"
     TypeID = db.Column(db.Integer, primary_key = True)
     TypeName = db.Column(db.String)
+'''
 
 class Source(db.Model):
     __tablename__ = "Source"

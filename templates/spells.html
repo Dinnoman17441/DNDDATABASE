@@ -4,32 +4,32 @@
 
 <table id="schoolsTable">
     <tr>
-        <th id="hideschools" colspan="3" onclick="schoolToggle()">Filter by School</th>
+        <th id="hideschools" colspan="3" onclick="schoolToggle()" class='noselect'>Filter by School <i id="arrow" class="arrow up"></i></th>
     </tr>
     <tr id="toggleCheck" class="schoolToggle" style="display: none;">
-        <th><a href="/spells/{{ source }}/1">Abjuration</a></th>
-        <th><a href="/spells/{{ source }}/2">Conjuration</a></th>
-        <th><a href="/spells/{{ source }}/3">Divination</a></th>
+        <th><a href="/spells/{{ source }}/1" class='noselect'>Abjuration</a></th>
+        <th><a href="/spells/{{ source }}/2" class='noselect'>Conjuration</a></th>
+        <th><a href="/spells/{{ source }}/3" class='noselect'>Divination</a></th>
     </tr>
     <tr class="schoolToggle" style="display: none;">
-        <th><a href="/spells/{{ source }}/4">Enchantment</a></th>
-        <th><a href="/spells/{{ source }}/5">Evocation</a></th>
-        <th><a href="/spells/{{ source }}/6">Illusion</a></th>
+        <th><a href="/spells/{{ source }}/4" class='noselect'>Enchantment</a></th>
+        <th><a href="/spells/{{ source }}/5" class='noselect'>Evocation</a></th>
+        <th><a href="/spells/{{ source }}/6" class='noselect'>Illusion</a></th>
     </tr>
     <tr class="schoolToggle" style="display: none;">
-        <th><a href="/spells/{{ source }}/7">Necromancy</a></th>
-        <th><a href="/spells/{{ source }}/8">Transmutation</a></th>
-        <th><a href="/spells/{{ source }}/9">Other</a></th>
+        <th><a href="/spells/{{ source }}/7" class='noselect'>Necromancy</a></th>
+        <th><a href="/spells/{{ source }}/8" class='noselect'>Transmutation</a></th>
+        <th><a href="/spells/{{ source }}/9" class='noselect'>Other</a></th>
     </tr>
 </table>
 
 <table class="sortable" id="spellsTable">
     <thead>
         <tr>
-            <th>Name</th>
-            <th>School</th>
-            <th>Level</th>
-            <th>View</th>
+            <th class='noselect'>Name</th>
+            <th class='noselect'>School</th>
+            <th class='noselect'>Level</th>
+            <th class='noselect'>View</th>
         </tr>
     </thead>
     <tbody>
@@ -55,10 +55,12 @@
             for (var i=0;i<elems.length;i+=1){
                 elems[i].style.display = 'table-row';
             }
+            document.getElementById('arrow').className ="arrow down"
         } else {
             for (var i=0;i<elems.length;i+=1){
                 elems[i].style.display = 'none';
             }
+            document.getElementById('arrow').className ="arrow up"
         }
     }
 </script>

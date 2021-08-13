@@ -6,3 +6,13 @@ Sprint Two | Commit 1
 - Added a password min of 7 characters
 - Changed a redirect after creating user that takes them to the login page instead of the home page
 - Added error messages to usercreate.html
+
+
+0.2.2
+Sprint Two | Commit 2
+
+- Added security to /addspell. User can no longer access the addspell page without being logged in
+- Added an up/down arrow on the 'Filter by school' table that toggles on click using JS
+- Added a .noselect class that disables text selection on certain objects
+- Moved logout button to float right side of nav-bar
+- Added <abbr> tags to the addspell page that explains what V, S, M components are to the user
