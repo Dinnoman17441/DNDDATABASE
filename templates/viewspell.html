@@ -23,7 +23,7 @@
         <p>{{ spell.SpellLevel }}th-level {{ spell.school.SchoolName }}</p>
     {% endif %}
 
-    <p><b>Casting Time:</b></p>
+    <p><b>Casting Time:</b> {{ spell.CastingTime }}</p>
     <p><b>Range:</b></p>
 
     {% if spell.V == 1 and spell.S == 1 and spell.M == 1 %}
