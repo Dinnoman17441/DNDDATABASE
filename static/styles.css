@@ -34,7 +34,7 @@ input, select {
   resize: none;
 }
 
-ul {
+nav ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -42,11 +42,11 @@ ul {
   background-color: rgb(209, 209, 209);
 }
 
-li {
+nav li {
   float: left;
 }
 
-li a {
+nav li a {
   display: block;
   color: black;
   text-align: center;
@@ -54,7 +54,7 @@ li a {
   text-decoration: none;
 }
 
-li a:hover {
+nav li a:hover {
   background-color: rgb(165, 165, 165);
 }
 
@@ -100,3 +100,4 @@ li a:hover {
 #logout {
   float: right;
 }
+  

@@ -16,3 +16,14 @@ Sprint Two | Commit 2
 - Added a .noselect class that disables text selection on certain objects
 - Moved logout button to float right side of nav-bar
 - Added <abbr> tags to the addspell page that explains what V, S, M components are to the user
+
+
+0.2.3
+Sprint Two | Commit 3
+
+- Added casting time to addspell form
+- Added casting time to /addspell
+- Added casting time to viewspell page
+- Added "Second(s)" as a valid duration unit
+- WIP on range in addspell form
+- Tiny change to css classes

@@ -118,6 +118,8 @@ def addspell():
             #Collects spell info from form
             new_spell_name = request.form["spell_name"]
             new_spell_level = request.form["spell_level"]
+            new_spell_casting_time_amount = request.form["casting_time"]
+            new_spell_casting_time_unit = request.form["casting_time_unit"]
             new_spell_duration_amount = request.form["spell_duration"]
             new_spell_duration_unit = request.form["spell_duration_unit"]
             new_spell_concentration = request.form["spell_concentration"]
@@ -125,6 +127,11 @@ def addspell():
             new_v = request.form["v_component"]
             new_s = request.form["s_component"]
             new_m = request.form["m_component"]
+
+            if new_spell_casting_time_unit == "Instantaneous":
+                new_spell_casting_time = new_spell_duration_unit
+            else:
+                new_spell_casting_time = new_spell_casting_time_amount + " " + new_spell_casting_time_unit
 
             if new_spell_duration_unit == "Instantaneous":
                 new_spell_duration = new_spell_duration_unit
@@ -142,6 +149,7 @@ def addspell():
             new_spell = models.Spell(
                 SpellName = new_spell_name,
                 SpellLevel = new_spell_level,
+                CastingTime = new_spell_casting_time,
                 Duration = new_spell_duration,
                 Concentration = new_spell_concentration,
                 owner = current_user(),
