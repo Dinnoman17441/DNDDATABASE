@@ -27,3 +27,9 @@ Sprint Two | Commit 3
 - Added "Second(s)" as a valid duration unit
 - WIP on range in addspell form
 - Tiny change to css classes
+
+0.2.4
+Sprint Four | Commit 4
+
+- WIP on range in addspell form
+    - Disable/Enable certain fields in the form using JS depending on chosen radio field
