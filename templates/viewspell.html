@@ -24,7 +24,7 @@
     {% endif %}
 
     <p><b>Casting Time:</b> {{ spell.CastingTime }}</p>
-    <p><b>Range:</b></p>
+    <p><b>Range:</b> {{ spell.Range }}</p>
 
     {% if spell.V == 1 and spell.S == 1 and spell.M == 1 %}
         <p><b>Components:</b> V, S, M</p>

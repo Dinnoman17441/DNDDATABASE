@@ -124,6 +124,23 @@ def addspell():
             new_spell_duration_unit = request.form["spell_duration_unit"]
             new_spell_concentration = request.form["spell_concentration"]
 
+            new_range = request.form["range_type"]
+            #new_normal_range_amount = request.form["normal_range_amount"]
+            #new_normal_range_unit = request.form["normal_range_unit"]
+            #new_self_type = request.form["self_type"]
+            #new_self_type_amount = request.form["self_type_amount"]
+            #new_self_type_unit = request.form["self_type_unit"]
+
+            if new_range == "Normal_Range":
+                new_spell_range = request.form["normal_range_amount"] + " " + request.form["normal_range_unit"]
+            elif new_range == "Self":
+                if request.form["self_type"] == "Pure":
+                    new_spell_range = "Self"
+                else:
+                    new_spell_range = "Self, " + request.form["self_type"] + ", " + request.form["self_type_amount"] + " " + request.form["self_type_unit"]
+            else:
+                new_spell_range = new_range
+
             new_v = request.form["v_component"]
             new_s = request.form["s_component"]
             new_m = request.form["m_component"]
@@ -150,6 +167,7 @@ def addspell():
                 SpellName = new_spell_name,
                 SpellLevel = new_spell_level,
                 CastingTime = new_spell_casting_time,
+                Range = new_spell_range,
                 Duration = new_spell_duration,
                 Concentration = new_spell_concentration,
                 owner = current_user(),

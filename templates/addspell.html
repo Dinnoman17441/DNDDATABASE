@@ -38,7 +38,13 @@
         <input id="self_radius" type='radio' name='self_type' value="Radius">
         <label for="self_radius">Radius</label>
         <input id="self_type_amount" type="number" name="self_type_amount">
-        <input id="self_type_unit" type="text" name="self_type_unit" list="ranges">
+        <input id="self_type_unit" type="text" name="self_type_unit" list="ranges_tense">
+        <datalist id="ranges_tense">
+            {% set ranges = ["Feet", "Mile(s)"] %}
+            {% for range in ranges %}
+                <option value="{{ range }}">{{ range }}</option>
+            {% endfor %}
+        </datalist>
         <br>
 
         <input id="sight" type="radio" name="range_type" value="Sight">
@@ -181,7 +187,6 @@
         element.addEventListener('change', changeRangeType)
     })
     changeRangeType({ target: {} })
-
 </script>
 
 
