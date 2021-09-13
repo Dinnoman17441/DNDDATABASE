@@ -1,194 +1,153 @@
 {% extends 'addbase.html' %}
 {% block body %}
 <form action="/addspell" method="POST">
-
-    <div id="name">
-        <label for="name"><b>Spell Name</b></label>
-        <input id="name" type="text" name="spell_name">
-        <br>
-    </div>
-
-    <div>
-        <label for="level"><b>Spell Level</b></label>
-        <input id="level" type="number" name="spell_level" min="0" max="9">
-        <br>
-    </div>
-
-    <div>
-        <label for="castingtime"><b>Casting Time</b></label>
-        <input id="castingtime" type="number" name="casting_time">
-
-        <input id="castingtime_unit" type="text" name="casting_time_unit" list="duration_units">
-    </div>
-
-    <div id="range_list">
-        <b>Range:</b>
-        <br>
-
-        <input id="touch" type="radio" name="range_type" value="Touch">
-        <label for="touch">Touch</label>
-        <br>
-
-        <input id="self" type="radio" name="range_type" value="Self">
-        <label for="self">Self:</label>
-        <input id="self_pure" type='radio' name='self_type' value="Pure">
-        <label for="self_pure">Pure</label>
-        <input id="self_cone" type='radio' name='self_type' value="Cone">
-        <label for="self_cone">Cone</label>
-        <input id="self_radius" type='radio' name='self_type' value="Radius">
-        <label for="self_radius">Radius</label>
-        <input id="self_type_amount" type="number" name="self_type_amount">
-        <input id="self_type_unit" type="text" name="self_type_unit" list="ranges_tense">
-        <datalist id="ranges_tense">
-            {% set ranges = ["Feet", "Mile(s)"] %}
-            {% for range in ranges %}
-                <option value="{{ range }}">{{ range }}</option>
-            {% endfor %}
-        </datalist>
-        <br>
-
-        <input id="sight" type="radio" name="range_type" value="Sight">
-        <label for="sight">Sight</label>
-        <br>
-
-        <input id="normal_range" type="radio" name="range_type" value="Normal_Range">
-        <label for="normal_range">Distance:</label>
-        <input id="normal_range_amount" type="number" name="normal_range_amount">
-        <input id="normal_range_unit" type="text" name="normal_range_unit" list="ranges">
-        <datalist id="ranges">
-            {% set ranges = ["Feet", "Mile(s)"] %}
-            {% for range in ranges %}
-                <option value="{{ range }}">{{ range }}</option>
-            {% endfor %}
-        </datalist>
-    </div>
-
-    <div>
-        <label for="duration"><b>Spell Duration</b></label>
-        <input id="duration" type="number" name="spell_duration">
-
-        <input id="duration_unit" type="text" name="spell_duration_unit" list="duration_units">
-        <datalist id="duration_units">
-            {% set units = ["Instantaneous", "Round(s)", "Second(s)", "Minute(s)", "Hour(s)", "Day(s)", "Week(s)", "Month(s)", "Year(s)"] %}
-            {% for unit in units %}
-                <option value="{{ unit }}">{{ unit }}</option>
-            {% endfor %}
-        </datalist>
-
-        <table>
-            <input type="hidden" name="spell_concentration" value="0">
-            <tr><input type="checkbox" id="concentration" name="spell_concentration" value="1"></tr>
-            <label for="concentration"> Concentration</label>
-        </table>
-    </div>
-
-    <div>
-        <label for="school"><b>Spell School</b></label>
-        <select id="school" type="text" name="spell_school" list="schools">
+<table class="spellAddTable">
+    <tr>
+        <th><b>Name</b></th>
+        <th><b>Level</b></th>
+        <th><b>School</b></th>
+    </tr>
+    <tr>
+        <th><input id="name" type="text" name="spell_name" autofocus></th>
+        <th><input id="level" type="number" name="spell_level" min="0" max="9"></th>
+        <th><select id="school" type="text" name="spell_school" list="schools">
             {% for school in schools %}
                 <option value="{{ school.SchoolName }}">{{ school.SchoolName }}</option>
             {% endfor %}
-        </select>
-    </div>
-    
-    <div>
-        <label for="source"><b>Source</b></label>
-        <select id="source" type="text" name="spell_source" list="sources">
-            {% for source in sources %}
-                <option value="{{ source.SourceName }}">{{ source.SourceName }}</option>
+                <option value="--" selected>--</option>
+        </select></th>
+    </tr>
+</table>
+<br>
+<table class="spellAddTable">
+    <tr>
+        <th><b>Casting Time</b></th>
+    </tr>
+    <tr>
+        <th><input id="castingtime" type="number" name="casting_time" min="0" max="999"></th>
+        <th><input id="castingtime_unit" type="text" name="casting_time_unit" list="duration_units"></th>
+    </tr>
+</table>
+<br>
+<table>
+
+</table>
+<br>
+<table>
+    <tr>
+        <th><select id="range_type" type="text" name="range_type">
+            {% set ranges = ["Self", "Touch", "Ranged", "Sight", "Unlimited"] %}
+            {% for range in ranges %}
+                <option value="{{ range }}">{{ range }}</option>
             {% endfor %}
-        </select>
-    </div>
-    <br>
-    <div>
-        <b>Components:</b>
+        </select></th>
+    </tr>
+</table>
+
+        <div id="range_form_div">
+            <b>Range:</b>
+            <br>
+
+            <input id="touch" type="radio" name="range_type" value="Touch">
+            <label for="touch">Touch</label>
+            <br>
+
+            <input id="self" type="radio" name="range_type" value="Self">
+            <label for="self">Self:</label>
+            <input id="self_pure" type='radio' name='self_type' value="Pure">
+            <label for="self_pure">Pure</label>
+            <input id="self_cone" type='radio' name='self_type' value="Cone">
+            <label for="self_cone">Cone</label>
+            <input id="self_radius" type='radio' name='self_type' value="Radius">
+            <label for="self_radius">Radius</label>
+            <input id="self_type_amount" type="number" name="self_type_amount">
+            <input id="self_type_unit" type="text" name="self_type_unit" list="ranges_tense">
+            <datalist id="ranges_tense">
+                {% set ranges = ["Feet", "Mile(s)"] %}
+                {% for range in ranges %}
+                    <option value="{{ range }}">{{ range }}</option>
+                {% endfor %}
+            </datalist>
+            <br>
+
+            <input id="sight" type="radio" name="range_type" value="Sight">
+            <label for="sight">Sight</label>
+            <br>
+
+            <input id="normal_range" type="radio" name="range_type" value="Normal_Range">
+            <label for="normal_range">Distance:</label>
+            <input id="normal_range_amount" type="number" name="normal_range_amount">
+            <input id="normal_range_unit" type="text" name="normal_range_unit" list="ranges">
+            <datalist id="ranges">
+                {% set ranges = ["Feet", "Mile(s)"] %}
+                {% for range in ranges %}
+                    <option value="{{ range }}">{{ range }}</option>
+                {% endfor %}
+            </datalist>
+        </div>
+
+        <div>
+            <label for="duration"><b>Spell Duration</b></label>
+            <input id="duration" type="number" name="spell_duration">
+
+            <input id="duration_unit" type="text" name="spell_duration_unit" list="duration_units">
+            <datalist id="duration_units">
+                {% set units = ["Instantaneous", "Round(s)", "Action(s)", "Reaction", "Second(s)", "Minute(s)", "Hour(s)", "Day(s)"] %}
+                {% for unit in units %}
+                    <option value="{{ unit }}">{{ unit }}</option>
+                {% endfor %}
+            </datalist>
+
+            <table>
+                <input type="hidden" name="spell_concentration" value="0">
+                <tr><input type="checkbox" id="concentration" name="spell_concentration" value="1"></tr>
+                <label for="concentration"> Concentration</label>
+            </table>
+        </div>
+
+
+        
+        <div>  
+            <label for="source"><b>Source</b></label>
+            <select id="source" type="text" name="spell_source" list="sources">
+                {% for source in sources %}
+                    <option value="{{ source.SourceName }}">{{ source.SourceName }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
         <br>
-        <table>
-            <input type="hidden" name="v_component" value="0">
-            <tr><input type="checkbox" id="v" name="v_component" value="1"></tr>
-            <label for="v"> (V) Verbal <abbr title="The Verbal component requires the spellcaster be able to verbally speak while casting the spell">?</abbr></label>
+        <div>
+            <b>Components:</b>
             <br>
+            <table>
+                <input type="hidden" name="v_component" value="0">
+                <tr><input type="checkbox" id="v" name="v_component" value="1"></tr>
+                <label for="v"> (V) Verbal <abbr title="The Verbal component requires the spellcaster be able to verbally speak while casting the spell">?</abbr></label>
+                <br>
 
-            <input type="hidden" name="s_component" value="0">
-            <tr><input type="checkbox" id="s" name="s_component" value="1"></tr>
-            <label for="s"> (S) Somatic <abbr title="The Somatic component requires the spellcaster be able to make a physical motion while casting the spell">?</abbr></label>
+                <input type="hidden" name="s_component" value="0">
+                <tr><input type="checkbox" id="s" name="s_component" value="1"></tr>
+                <label for="s"> (S) Somatic <abbr title="The Somatic component requires the spellcaster be able to make a physical motion while casting the spell">?</abbr></label>
 
-            <br>
-            <input type="hidden" name="m_component" value="0">
-            <tr><input type="checkbox" id="m" name="m_component" value="1"></tr>
-            <label for="m"> (M) Material <abbr title="The Material component requires the spellcaster to consume a specified material to cast the spell">?</abbr></label>
-        </table>
-    </div>
-    <br>
-    <div>
-        <label for="desc"><b>Description</b></label>
-        <textarea id="desc" type="text" name="spell_desc"></textarea>
-    </div>
-    <br>
+                <br>
+                <input type="hidden" name="m_component" value="0">
+                <tr><input type="checkbox" id="m" name="m_component" value="1"></tr>
+                <label for="m"> (M) Material <abbr title="The Material component requires the spellcaster to consume a specified material to cast the spell">?</abbr></label>
+            </table>
+        </div>
+        <br>
+        <div>
+            <label for="desc"><b>Description</b></label>
+            <textarea id="desc" type="text" name="spell_desc"></textarea>
+        </div>
+        <br>
 
-    <input type="submit" value="Add">
+        <input type="submit" value="Add">
 </form>
+
 <form action="/spells">
     <input type="submit" value="Cancel">
 </form>
-
-<script>
-    
-    // document.getElementById('normal_range').addEventListener('input', function(event){
-    //     console.log(event.target);
-    // })
-
-    function changeRangeType(event){
-        const normal_range_amount = document.querySelector('#normal_range_amount');
-        const normal_range_unit = document.querySelector('#normal_range_unit');
-        const self_radius = document.querySelector('#self_radius');
-        const self_cone = document.querySelector('#self_cone');
-        const self_pure = document.querySelector('#self_pure');
-        const self_type_amount = document.querySelector('#self_type_amount');
-        const self_type_unit = document.querySelector('#self_type_unit');
-
-        if (event.target.value == 'Normal_Range') {
-           normal_range_amount.disabled = false;
-           normal_range_unit.disabled = false;
-           self_radius.disabled = true;
-           self_cone.disabled = true;
-           self_pure.disabled = true;
-           self_type_amount.disabled = true;
-           self_type_unit.disabled = true;
-           self_type_amount.value = '';
-           self_type_unit.value = '';
-
-        } else if (event.target.value == 'Self') {
-           normal_range_amount.disabled = true;
-           normal_range_unit.disabled = true;
-           normal_range_amount.value = '';
-           normal_range_unit.value = '';
-           self_radius.disabled = false;
-           self_cone.disabled = false;
-           self_pure.disabled = false;
-           self_type_amount.disabled = false;
-           self_type_unit.disabled = false;
-
-        } else {
-           normal_range_amount.disabled = true;
-           normal_range_unit.disabled = true;
-           normal_range_amount.value = '';
-           normal_range_unit.value = '';
-           self_radius.disabled = true;
-           self_cone.disabled = true;
-           self_pure.disabled = true;
-           self_type_amount.disabled = true;
-           self_type_unit.disabled = true;
-           self_type_amount.value = '';
-           self_type_unit.value = '';
-        }
-    }
-    document.querySelectorAll('input[type=radio][name=range_type]').forEach(function(element){
-        element.addEventListener('change', changeRangeType)
-    })
-    changeRangeType({ target: {} })
-</script>
-
-
 
 {% endblock body %}

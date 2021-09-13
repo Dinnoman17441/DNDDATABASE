@@ -113,6 +113,7 @@ def spellssortschool(SourceID, SchoolID):
 def addspell():
     schools = models.School.query.all()
     sources = models.Source.query.all()
+    users = models.User.query.filter_by(username = 'admin').first
     if session.get('useron'):
         if request.method == "POST":
             #Collects spell info from form
@@ -186,7 +187,7 @@ def addspell():
     else:
         return render_template('userlogin.html', error='Not currently logged in', new_user="")
         #If the user is not logged in, sends them to the login page. This will only happen if they manually type /addspell
-    return render_template('addspell.html', schools=schools, sources=sources)
+    return render_template('addspell.html', schools=schools, sources=sources, users=users)
 
 @app.route('/viewspell/<int:SpellID>', methods = ["GET", "POST"])
 def viewspell(SpellID):

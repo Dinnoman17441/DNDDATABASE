@@ -1,18 +1,20 @@
-table {
+/*
+#spellsTable table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
   }
   
-  td, th {
+  #spellsTable td, th {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
   }
   
-  tr:nth-child(even) {
+  #spellsTable tr:nth-child(even) {
     background-color: #dddddd;
   }
+*/
 
 #desc {
   width: 100%;
@@ -25,14 +27,14 @@ table {
   resize: vertical;
 }
 
-input, select {
+/* input, select {
   margin: 8px 0;
   box-sizing: border-box;
   border: 2px solid #ccc;
   border-radius: 4px;
   background-color: #f8f8f8;
   resize: none;
-}
+} */
 
 nav ul {
   list-style-type: none;
@@ -100,4 +102,7 @@ nav li a:hover {
 #logout {
   float: right;
 }
-  
+
+.spellAddTable{
+  text-align: left;
+}

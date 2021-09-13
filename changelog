@@ -29,7 +29,18 @@ Sprint Two | Commit 3
 - Tiny change to css classes
 
 0.2.4
-Sprint Four | Commit 4
+Sprint Two | Commit 4
 
 - WIP on range in addspell form
     - Disable/Enable certain fields in the form using JS depending on chosen radio field
+
+0.2.5
+Sprint Two | Commit 5
+
+- WIP on range in addspell form
+
+0.2.6
+Sprint Two | Commit 6
+
+- WIP on range in addspell form
+- Reforming addspell form
