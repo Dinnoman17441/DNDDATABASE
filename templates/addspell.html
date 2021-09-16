@@ -3,13 +3,13 @@
 <form action="/addspell" method="POST">
 <table class="spellAddTable">
     <tr>
-        <th><b>Name</b></th>
-        <th><b>Level</b></th>
-        <th><b>School</b></th>
+        <th><label for="name"><b>Name</b></label></th>
+        <th><label for="level"><b>Level</b></label></th>
+        <th><label for="school"><b>School</b></th></label>
     </tr>
     <tr>
         <th><input id="name" type="text" name="spell_name" autofocus></th>
-        <th><input id="level" type="number" name="spell_level" min="0" max="9"></th>
+        <th><input id="level" type="number" name="spell_level" min="0" max="9" class="numberInput"></th>
         <th><select id="school" type="text" name="spell_school" list="schools">
             {% for school in schools %}
                 <option value="{{ school.SchoolName }}">{{ school.SchoolName }}</option>
@@ -21,19 +21,18 @@
 <br>
 <table class="spellAddTable">
     <tr>
-        <th><b>Casting Time</b></th>
+        <th><label for="school"><b>Casting Time</b></label></th>
     </tr>
     <tr>
-        <th><input id="castingtime" type="number" name="casting_time" min="0" max="999"></th>
+        <th><input id="castingtime" type="number" name="casting_time" min="0" max="999" class="numberInput"></th>
         <th><input id="castingtime_unit" type="text" name="casting_time_unit" list="duration_units"></th>
     </tr>
 </table>
 <br>
-<table>
-
-</table>
-<br>
-<table>
+<table class="spellAddTable">
+    <tr>
+        <th><label for="school"><b>Range</b></label></th>
+    </tr>
     <tr>
         <th><select id="range_type" type="text" name="range_type">
             {% set ranges = ["Self", "Touch", "Ranged", "Sight", "Unlimited"] %}
@@ -41,50 +40,10 @@
                 <option value="{{ range }}">{{ range }}</option>
             {% endfor %}
         </select></th>
+        <th><input id="range_number_value" type="number" name="range_number_value"></th>
+        <th><input id="range_unit" type="text" name="range_unit"></th>
     </tr>
 </table>
-
-        <div id="range_form_div">
-            <b>Range:</b>
-            <br>
-
-            <input id="touch" type="radio" name="range_type" value="Touch">
-            <label for="touch">Touch</label>
-            <br>
-
-            <input id="self" type="radio" name="range_type" value="Self">
-            <label for="self">Self:</label>
-            <input id="self_pure" type='radio' name='self_type' value="Pure">
-            <label for="self_pure">Pure</label>
-            <input id="self_cone" type='radio' name='self_type' value="Cone">
-            <label for="self_cone">Cone</label>
-            <input id="self_radius" type='radio' name='self_type' value="Radius">
-            <label for="self_radius">Radius</label>
-            <input id="self_type_amount" type="number" name="self_type_amount">
-            <input id="self_type_unit" type="text" name="self_type_unit" list="ranges_tense">
-            <datalist id="ranges_tense">
-                {% set ranges = ["Feet", "Mile(s)"] %}
-                {% for range in ranges %}
-                    <option value="{{ range }}">{{ range }}</option>
-                {% endfor %}
-            </datalist>
-            <br>
-
-            <input id="sight" type="radio" name="range_type" value="Sight">
-            <label for="sight">Sight</label>
-            <br>
-
-            <input id="normal_range" type="radio" name="range_type" value="Normal_Range">
-            <label for="normal_range">Distance:</label>
-            <input id="normal_range_amount" type="number" name="normal_range_amount">
-            <input id="normal_range_unit" type="text" name="normal_range_unit" list="ranges">
-            <datalist id="ranges">
-                {% set ranges = ["Feet", "Mile(s)"] %}
-                {% for range in ranges %}
-                    <option value="{{ range }}">{{ range }}</option>
-                {% endfor %}
-            </datalist>
-        </div>
 
         <div>
             <label for="duration"><b>Spell Duration</b></label>
@@ -149,5 +108,18 @@
 <form action="/spells">
     <input type="submit" value="Cancel">
 </form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+var $rtype = $('#range_type'), $rvalue = $('#range_number_value'), $runit = $('#range_number_value');
+$rtype.change(function () {
+    if ($rtype.val() == 'Ranged') {
+        $rvalue.removeAttr('disabled');
+        $runit.removeAttr('disabled');
+    } else {
+        $rvalue.attr('disabled', 'disabled').val('');
+        $runit.attr('disabled', 'disabled').val('');
+    }
+}).trigger('change');
+</script>
+
 
 {% endblock body %}

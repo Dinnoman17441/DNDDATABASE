@@ -78,7 +78,6 @@ NEC = School(SchoolName = "Necromancy")
 TRA = School(SchoolName = "Transmutation")
 OTH = School(SchoolName = "Other")
 
-#Brute forcing "db.session.add()" because db.session.add(ABJ, CON, DIV, ...) doesn't work :)
 db.session.add(ABJ)
 db.session.add(CON)
 db.session.add(DIV)
