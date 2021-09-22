@@ -108,8 +108,8 @@
 <form action="/spells">
     <input type="submit" value="Cancel">
 </form>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
-var $rtype = $('#range_type'), $rvalue = $('#range_number_value'), $runit = $('#range_number_value');
+<script>
+var $rtype = $('#range_type'), $rvalue = $('#range_number_value'), $runit = $('#range_unit');
 $rtype.change(function () {
     if ($rtype.val() == 'Ranged') {
         $rvalue.removeAttr('disabled');
