@@ -32,6 +32,7 @@
 <table class="spellAddTable">
     <tr>
         <th><label for="school"><b>Range</b></label></th>
+        <th><b>Ranged Distance</b></th>
     </tr>
     <tr>
         <th><select id="range_type" type="text" name="range_type">
@@ -41,68 +42,80 @@
             {% endfor %}
         </select></th>
         <th><input id="range_number_value" type="number" name="range_number_value"></th>
-        <th><input id="range_unit" type="text" name="range_unit"></th>
+        <th><select id="range_unit" type="text" name="range_unit">
+            {% set units = ["Feet (ft.)", "Miles (mi.)"] %}
+            {% for unit in units %}
+                <option value="{{ unit }}">{{ unit }}</option>
+            {% endfor %}
+        </select></th>
     </tr>
 </table>
-
-        <div>
-            <label for="duration"><b>Spell Duration</b></label>
-            <input id="duration" type="number" name="spell_duration">
-
-            <input id="duration_unit" type="text" name="spell_duration_unit" list="duration_units">
-            <datalist id="duration_units">
-                {% set units = ["Instantaneous", "Round(s)", "Action(s)", "Reaction", "Second(s)", "Minute(s)", "Hour(s)", "Day(s)"] %}
-                {% for unit in units %}
-                    <option value="{{ unit }}">{{ unit }}</option>
-                {% endfor %}
-            </datalist>
-
-            <table>
-                <input type="hidden" name="spell_concentration" value="0">
-                <tr><input type="checkbox" id="concentration" name="spell_concentration" value="1"></tr>
-                <label for="concentration"> Concentration</label>
-            </table>
-        </div>
-
-
+<br>
+<table class="spellAddTable">
+    <tr>
+        <th><b>Duration Type</b></th>
+        <th><label for="duration"><b>Duration</b></label></th>
+    </tr>
+    <tr>
+        <th><select id="duration_type" type="text" name="duration_type">
+            {% set units = ["Concentration", "Instantaneous", "Special", "Time", "Until Dispelled", "Until Dispelled or Triggered"] %}
+            {% for unit in units %}
+                <option value="{{ unit }}">{{ unit }}</option>
+            {% endfor %}
+                <option value="NULL" selected>--</option>
+        </select></th>
+        <th><input id="duration" type="number" name="spell_duration"></th>
+        <th><select id="duration_time_unit" type="text" name="duration_time_unit">
+            {% set units = ["Round", "Minute", "Hour", "Day"] %}
+            {% for unit in units %}
+                <option value="{{ unit }}">{{ unit }}</option>
+            {% endfor %}
+                <option value="NULL" selected>--</option>
+        </select></th>
+    </tr>
+</table>
+<br>
+<table class="spellAddTable">
+    <tr>
+        <th><b>Components</b></th>
+    </tr>
+        <input type="hidden" name="v_component" value="0">
+        <tr><td><input type="checkbox" id="v" name="v_component" value="1">
+        <label for="v"> (V) Verbal <abbr title="The Verbal component requires the spellcaster be able to verbally speak while casting the spell">?</abbr></label></td></tr>
         
-        <div>  
-            <label for="source"><b>Source</b></label>
-            <select id="source" type="text" name="spell_source" list="sources">
-                {% for source in sources %}
-                    <option value="{{ source.SourceName }}">{{ source.SourceName }}</option>
-                {% endfor %}
-            </select>
-        </div>
 
-        <br>
-        <div>
-            <b>Components:</b>
-            <br>
-            <table>
-                <input type="hidden" name="v_component" value="0">
-                <tr><input type="checkbox" id="v" name="v_component" value="1"></tr>
-                <label for="v"> (V) Verbal <abbr title="The Verbal component requires the spellcaster be able to verbally speak while casting the spell">?</abbr></label>
-                <br>
+        <input type="hidden" name="s_component" value="0">
+        <tr><td><input type="checkbox" id="s" name="s_component" value="1">
+        <label for="s"> (S) Somatic <abbr title="The Somatic component requires the spellcaster be able to make a physical motion while casting the spell">?</abbr></label></td></tr>
+        
+        
+        <input type="hidden" name="m_component" value="0">
+        <tr><td><input type="checkbox" id="m" name="m_component" value="1">
+        <label for="m"> (M) Material <abbr title="The Material component requires the spellcaster to consume a specified material to cast the spell">?</abbr></label></td></tr>
+        
+        <tr>
+            <th><b>Material Components</b></th>
+        </tr>
+        <tr>
+            <th><input type=text id="materials" disabled></th>
+        </tr>   
+</table>
+<br>
+<div>
+    <label for="desc"><b>Description</b></label>
+    <textarea id="desc" type="text" name="spell_desc"></textarea>
+</div>
+<br>
+<div>  
+    <label for="source"><b>Source</b></label>
+    <select id="source" type="text" name="spell_source" list="sources">
+        {% for source in sources %}
+            <option value="{{ source.SourceName }}">{{ source.SourceName }}</option>
+        {% endfor %}
+    </select>
+</div>
 
-                <input type="hidden" name="s_component" value="0">
-                <tr><input type="checkbox" id="s" name="s_component" value="1"></tr>
-                <label for="s"> (S) Somatic <abbr title="The Somatic component requires the spellcaster be able to make a physical motion while casting the spell">?</abbr></label>
-
-                <br>
-                <input type="hidden" name="m_component" value="0">
-                <tr><input type="checkbox" id="m" name="m_component" value="1"></tr>
-                <label for="m"> (M) Material <abbr title="The Material component requires the spellcaster to consume a specified material to cast the spell">?</abbr></label>
-            </table>
-        </div>
-        <br>
-        <div>
-            <label for="desc"><b>Description</b></label>
-            <textarea id="desc" type="text" name="spell_desc"></textarea>
-        </div>
-        <br>
-
-        <input type="submit" value="Add">
+<input type="submit" value="Add">
 </form>
 
 <form action="/spells">
@@ -120,6 +133,35 @@ $rtype.change(function () {
     }
 }).trigger('change');
 </script>
+<script>
+var $durtype = $('#duration_type'), $durvalue = $('#duration'), $durunit = $('#duration_time_unit');
+$durtype.change(function () {
+    if ($durtype.val() == 'Concentration') {
+        $durvalue.removeAttr('disabled');
+        $durunit.removeAttr('disabled');
+    } else if ($durtype.val() == 'Time') {
+        $durvalue.removeAttr('disabled');
+        $durunit.removeAttr('disabled');
+    } else if ($durtype.val() == 'Special') {
+        $durvalue.removeAttr('disabled');
+        $durunit.removeAttr('disabled');
+    } else {
+        $durvalue.attr('disabled', 'disabled').val('');
+        $durunit.attr('disabled', 'disabled').val('');
+    }
+}).trigger('change')
+</script>
+<script>
+var $m = $('#m'), $materials = $("#materials");
+$m.click(function () {
+    if($m.is(':checked')) {
+        $materials.removeAttr('disabled');
+    } else {
+        $materials.attr('disabled', 'disabled').val('');
+    }
+});
 
+
+</script>
 
 {% endblock body %}
