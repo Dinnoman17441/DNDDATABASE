@@ -16,6 +16,7 @@ class Spell(db.Model):
     V = db.Column(db.Integer)
     S = db.Column(db.Integer)
     M = db.Column(db.Integer)
+    Materials = db.Column(db.String)
     Duration = db.Column(db.String)
     Description = db.Column(db.String)
     Concentration = db.Column(db.Integer)
@@ -28,35 +29,10 @@ class Spell(db.Model):
     school = db.relationship("School", backref="spells")
     source = db.relationship("Source", backref="spells")
 
-'''
-class Item(db.Model):
-    __tablename__ = "Item"
-    ItemID = db.Column(db.Integer, primary_key = True)
-    ItemName = db.Column(db.String)
-    Description = db.Column(db.String)
-    ItemType = db.Column(db.String)
-    ItemRarity = db.Column(db.String)
-
-    OwnerID = db.Column(db.Integer, db.ForeignKey('User.UserID'), nullable=False)
-    TypeID = db.Column(db.Integer, db.ForeignKey('Type.TypeID'), nullable=False)
-    SourceID = db.Column(db.Integer, db.ForeignKey('Source.SourceID'), nullable=False)
-
-    owner = db.relationship("User", backref="items")
-    type = db.relationship("Type", backref="items")
-    source = db.relationship("Source", backref="items")
-'''
-
 class School(db.Model):
     __tablename__ = "School"
     SchoolID = db.Column(db.Integer, primary_key = True)
     SchoolName = db.Column(db.String)
-
-'''
-class Type(db.Model):
-    __tablename__ = "Type"
-    TypeID = db.Column(db.Integer, primary_key = True)
-    TypeName = db.Column(db.String)
-'''
 
 class Source(db.Model):
     __tablename__ = "Source"
@@ -66,7 +42,7 @@ class Source(db.Model):
 db.create_all()
 
 
-'''
+#'''
 #Adds list of Schools to database on formation
 ABJ = School(SchoolName = "Abjuration")
 CON = School(SchoolName = "Conjuration")
@@ -94,17 +70,4 @@ Homebrew = Source(SourceName = "Homebrew")
 
 db.session.add(Official)
 db.session.add(Homebrew)
-
-#Adds list of Item Types to database on formation
-Weapon = Type(TypeName = "Weapon")
-Armour = Type(TypeName = "Armour")
-Consumable = Type(TypeName = "Consumable")
-Other  = Type(TypeName = "Other")
-
-db.session.add(Weapon)
-db.session.add(Armour)
-db.session.add(Consumable)
-db.session.add(Other)
-
-db.session.commit()
 #'''

@@ -132,19 +132,17 @@ def addspell():
             #new_self_type_amount = request.form["self_type_amount"]
             #new_self_type_unit = request.form["self_type_unit"]
 
-            if new_range == "Normal_Range":
-                new_spell_range = request.form["normal_range_amount"] + " " + request.form["normal_range_unit"]
-            elif new_range == "Self":
-                if request.form["self_type"] == "Pure":
-                    new_spell_range = "Self"
-                else:
-                    new_spell_range = "Self, " + request.form["self_type"] + ", " + request.form["self_type_amount"] + " " + request.form["self_type_unit"]
+            if new_range == "Ranged":
+                new_spell_range = request.form["range_number_value"] + " " + request.form["range_unit"]
             else:
                 new_spell_range = new_range
 
             new_v = request.form["v_component"]
             new_s = request.form["s_component"]
             new_m = request.form["m_component"]
+            
+            if new_m == 1:
+                new_materials = request.form["materials"]
 
             if new_spell_casting_time_unit == "Instantaneous":
                 new_spell_casting_time = new_spell_duration_unit
@@ -178,6 +176,7 @@ def addspell():
                 V = new_v,
                 S = new_s,
                 M = new_m,
+                Materials = new_materials,
             )
 
             db.session.add(new_spell)
