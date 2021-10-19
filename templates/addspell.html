@@ -25,7 +25,7 @@
     </tr>
     <tr>
         <th><input id="castingtime" type="number" name="casting_time" min="0" max="999" class="numberInput"></th>
-        <th><input id="castingtime_unit" type="text" name="casting_time_unit" list="duration_units"></th>
+        <th><input id="castingtime_unit" type="text" name="casting_time_unit" list="duration_time_unit"></th>
     </tr>
 </table>
 <br>
@@ -104,6 +104,11 @@
 <div>
     <label for="desc"><b>Description</b></label>
     <textarea id="desc" type="text" name="spell_desc"></textarea>
+</div>
+<div>
+    <label for="rit"><b>Ritual?</b></label>
+    <input type="hidden" name="ritual" value="0">
+    <input type="checkbox" name="ritual" id="rit" value="1">
 </div>
 <br>
 <div>  

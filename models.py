@@ -17,9 +17,10 @@ class Spell(db.Model):
     S = db.Column(db.Integer)
     M = db.Column(db.Integer)
     Materials = db.Column(db.String)
-    Duration = db.Column(db.String)
+    Duration = db.Column(db.String) 
     Description = db.Column(db.String)
     Concentration = db.Column(db.Integer)
+    Ritual = db.Column(db.Integer)
 
     OwnerID = db.Column(db.Integer, db.ForeignKey('User.UserID'), nullable=False)
     SchoolID = db.Column(db.Integer, db.ForeignKey('School.SchoolID'), nullable=False)
@@ -42,7 +43,7 @@ class Source(db.Model):
 db.create_all()
 
 
-#'''
+'''
 #Adds list of Schools to database on formation
 ABJ = School(SchoolName = "Abjuration")
 CON = School(SchoolName = "Conjuration")
@@ -70,4 +71,6 @@ Homebrew = Source(SourceName = "Homebrew")
 
 db.session.add(Official)
 db.session.add(Homebrew)
+
+db.session.commit()
 #'''

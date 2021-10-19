@@ -44,3 +44,16 @@ Sprint Two | Commit 6
 
 - WIP on range in addspell form
 - Reforming addspell form
+
+0.2.11
+Sprint Two | Commit 11
+
+- Fixed database bug
+- Added "ritual" and "materials" to spell class
+
+TODO
+
+- Form Checks
+- View Spell Page
+- CSS
+- Help Popups

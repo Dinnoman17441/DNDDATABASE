@@ -75,7 +75,7 @@ def login():
             return redirect("/")
         else:
             #Returns user to the start of the form with an error message if username or password dont match
-            return render_template('userlogin.html', error = 'Username or Password Incorrect')
+            return render_template('userlogin.html', error = 'Username or Password Incorrect', new_user="")
     return render_template('userlogin.html', new_user="")
 
 @app.route('/logout')
@@ -162,6 +162,8 @@ def addspell():
             
             new_spell_description = request.form["spell_desc"]
 
+            new_spell_ritual = request.form["ritual"]
+
             new_spell = models.Spell(
                 SpellName = new_spell_name,
                 SpellLevel = new_spell_level,
@@ -177,6 +179,7 @@ def addspell():
                 S = new_s,
                 M = new_m,
                 Materials = new_materials,
+                Ritual = new_spell_ritual,
             )
 
             db.session.add(new_spell)
