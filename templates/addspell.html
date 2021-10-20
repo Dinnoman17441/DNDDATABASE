@@ -14,7 +14,7 @@
             {% for school in schools %}
                 <option value="{{ school.SchoolName }}">{{ school.SchoolName }}</option>
             {% endfor %}
-                <option value="--" selected>--</option>
+            <option value="--" selected>--</option>
         </select></th>
     </tr>
 </table>
@@ -24,14 +24,20 @@
         <th><label for="school"><b>Casting Time</b></label></th>
     </tr>
     <tr>
-        <th><input id="castingtime" type="number" name="casting_time" min="0" max="999" class="numberInput"></th>
-        <th><input id="castingtime_unit" type="text" name="casting_time_unit" list="duration_time_unit"></th>
+        <th><input id="castingtime" type="number" name="casting_time" min="0" max="999" value="0" class="numberInput"></th>
+        <th><select id="castingtime_unit" type="text" name="casting_time_unit">
+            {% set ctimes = ["Action", "Bonus Action", "Hour", "Minute", "Instantaneous", "Reaction", "Special"] %}
+            {% for ctime in ctimes %}
+                <option value="{{ ctime }}">{{ ctime }}</option>
+            {% endfor %}
+            <option value="--" selected>--</option>
+        </select></th>
     </tr>
 </table>
 <br>
 <table class="spellAddTable">
     <tr>
-        <th><label for="school"><b>Range</b></label></th>
+        <th><label for="range_type"><b>Range</b></label></th>
         <th><b>Ranged Distance</b></th>
     </tr>
     <tr>
@@ -40,13 +46,15 @@
             {% for range in ranges %}
                 <option value="{{ range }}">{{ range }}</option>
             {% endfor %}
+            <option value="--" selected>--</option>
         </select></th>
-        <th><input id="range_number_value" type="number" name="range_number_value"></th>
+        <th><input id="range_number_value" type="number" name="range_number_value" min="0"></th>
         <th><select id="range_unit" type="text" name="range_unit">
             {% set units = ["Feet (ft.)", "Miles (mi.)"] %}
             {% for unit in units %}
                 <option value="{{ unit }}">{{ unit }}</option>
             {% endfor %}
+            <option value="--" selected>--</option>
         </select></th>
     </tr>
 </table>
@@ -64,7 +72,7 @@
             {% endfor %}
                 <option value="NULL" selected>--</option>
         </select></th>
-        <th><input id="duration" type="number" name="spell_duration"></th>
+        <th><input id="duration" type="number" name="spell_duration" min="0"></th>
         <th><select id="duration_time_unit" type="text" name="duration_time_unit">
             {% set units = ["Round", "Minute", "Hour", "Day"] %}
             {% for unit in units %}

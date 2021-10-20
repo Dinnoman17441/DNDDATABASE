@@ -57,3 +57,8 @@ TODO
 - View Spell Page
 - CSS
 - Help Popups
+
+0.2.12
+Sprint Two | Commit 12
+
+- Rewriting /addspell route

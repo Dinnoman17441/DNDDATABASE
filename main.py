@@ -117,69 +117,72 @@ def addspell():
     if session.get('useron'):
         if request.method == "POST":
             #Collects spell info from form
-            new_spell_name = request.form["spell_name"]
-            new_spell_level = request.form["spell_level"]
-            new_spell_casting_time_amount = request.form["casting_time"]
-            new_spell_casting_time_unit = request.form["casting_time_unit"]
-            new_spell_duration_amount = request.form["spell_duration"]
-            new_spell_duration_unit = request.form["spell_duration_unit"]
-            new_spell_concentration = request.form["spell_concentration"]
+            form_name = request.form["spell_name"]
+            form_level = request.form["spell_level"]
 
-            new_range = request.form["range_type"]
-            #new_normal_range_amount = request.form["normal_range_amount"]
-            #new_normal_range_unit = request.form["normal_range_unit"]
-            #new_self_type = request.form["self_type"]
-            #new_self_type_amount = request.form["self_type_amount"]
-            #new_self_type_unit = request.form["self_type_unit"]
+            ##Casting Time
+            form_castingtime = request.form["casting_time"]
+            form_castingtimeunit = request.form["casting_time_unit"]
 
-            if new_range == "Ranged":
-                new_spell_range = request.form["range_number_value"] + " " + request.form["range_unit"]
+            ##Range
+            form_rangetype = request.form["range_type"]
+            if form_rangetype == "Ranged":
+                form_rangenumber = request.form["range_number_value"]
             else:
-                new_spell_range = new_range
+                form_rangenumber = -1
 
-            new_v = request.form["v_component"]
-            new_s = request.form["s_component"]
-            new_m = request.form["m_component"]
-            
-            if new_m == 1:
-                new_materials = request.form["materials"]
-
-            if new_spell_casting_time_unit == "Instantaneous":
-                new_spell_casting_time = new_spell_duration_unit
+            ##Duration
+            form_durationtype = request.form["duration_type"]
+            int_durationtypes = ['Concentration', 'Special', 'Time']
+            if form_durationtype in int_durationtypes:
+                form_durationnumber = request.form["spell_duration"]
+                form_durationunit = request.form["duration_time_unit"]
             else:
-                new_spell_casting_time = new_spell_casting_time_amount + " " + new_spell_casting_time_unit
+                form_durationnumber = -1
+                form_durationunit = "NULL"
 
-            if new_spell_duration_unit == "Instantaneous":
-                new_spell_duration = new_spell_duration_unit
+            ##Components
+            form_vcomp = request.form["v_component"]
+            form_scomp = request.form["s_component"]
+            form_mcomp = request.form["m_component"]
+
+            if form_mcomp == 1:
+                form_materials = request.form["materials"]
             else:
-                new_spell_duration = new_spell_duration_amount + " " + new_spell_duration_unit
+                form_materials = "NULL"
 
-            new_spell_school = request.form["spell_school"]
-            new_spell_school_id = models.School.query.filter_by(SchoolName = new_spell_school).first()
+            if form_mcomp == 1 and form_materials == "":
+                error = "Please state material components"
 
-            new_spell_source = request.form["spell_source"]
-            new_spell_source_id = models.Source.query.filter_by(SourceName = new_spell_source).first()
-            
-            new_spell_description = request.form["spell_desc"]
+            ##Description
+            form_desc = request.form["spell_desc"]
 
-            new_spell_ritual = request.form["ritual"]
+            ##Ritual
+            form_ritual = request.form["ritual"]
+
+            ##Source and School
+            form_source = request.form["spell_source"]
+            source_id = models.Source.query.filter_by(SourceName = form_source).first()
+
+            form_school = request.form["spell_school"]
+            school_id = models.School.query.filter_by(SchoolName = form_school).first()
 
             new_spell = models.Spell(
-                SpellName = new_spell_name,
-                SpellLevel = new_spell_level,
+                SpellName = form_name,
+                SpellLevel = form_level,
                 CastingTime = new_spell_casting_time,
                 Range = new_spell_range,
                 Duration = new_spell_duration,
                 Concentration = new_spell_concentration,
                 owner = current_user(),
-                school = new_spell_school_id,
-                source = new_spell_source_id,
-                Description = new_spell_description,
-                V = new_v,
-                S = new_s,
-                M = new_m,
-                Materials = new_materials,
-                Ritual = new_spell_ritual,
+                school = school_id,
+                source = source_id,
+                Description = form_desc,
+                V = form_vcomp,
+                S = form_scomp,
+                M = form_mcomp,
+                Materials = form_materials,
+                Ritual = form_ritual,
             )
 
             db.session.add(new_spell)
