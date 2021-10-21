@@ -113,6 +113,7 @@ def spellssortschool(SourceID, SchoolID):
 def addspell():
     schools = models.School.query.all()
     sources = models.Source.query.all()
+    errorcheck = False
     users = models.User.query.filter_by(username = 'admin').first
     if session.get('useron'):
         if request.method == "POST":
@@ -124,12 +125,16 @@ def addspell():
             form_castingtime = request.form["casting_time"]
             form_castingtimeunit = request.form["casting_time_unit"]
 
+            ctime_string = form_castingtime + " " + form_castingtimeunit
+
             ##Range
             form_rangetype = request.form["range_type"]
             if form_rangetype == "Ranged":
                 form_rangenumber = request.form["range_number_value"]
+                
             else:
                 form_rangenumber = -1
+                range_string = form_rangetype
 
             ##Duration
             form_durationtype = request.form["duration_type"]
@@ -140,6 +145,18 @@ def addspell():
             else:
                 form_durationnumber = -1
                 form_durationunit = "NULL"
+
+            fd_string = str(form_durationnumber)
+
+            if form_durationnumber == -1:
+                duration_string = form_durationtype
+            else:
+                duration_string = fd_string + " " + form_durationunit
+
+            if form_durationtype == "Concentration":
+                spl_concentration = 1
+            else:
+                spl_concentration = 0
 
             ##Components
             form_vcomp = request.form["v_component"]
@@ -152,6 +169,7 @@ def addspell():
                 form_materials = "NULL"
 
             if form_mcomp == 1 and form_materials == "":
+                errorcheck = True
                 error = "Please state material components"
 
             ##Description
@@ -170,10 +188,10 @@ def addspell():
             new_spell = models.Spell(
                 SpellName = form_name,
                 SpellLevel = form_level,
-                CastingTime = new_spell_casting_time,
+                CastingTime = ctime_string,
                 Range = new_spell_range,
-                Duration = new_spell_duration,
-                Concentration = new_spell_concentration,
+                Duration = duration_string,
+                Concentration = spl_concentration,
                 owner = current_user(),
                 school = school_id,
                 source = source_id,
@@ -184,9 +202,11 @@ def addspell():
                 Materials = form_materials,
                 Ritual = form_ritual,
             )
-
-            db.session.add(new_spell)
-            db.session.commit()
+            if errorcheck = False:
+                db.session.add(new_spell)
+                db.session.commit()
+            else:
+                #Flash error message
 
             return redirect("/spells")
     else:
