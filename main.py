@@ -131,6 +131,8 @@ def addspell():
             form_rangetype = request.form["range_type"]
             if form_rangetype == "Ranged":
                 form_rangenumber = request.form["range_number_value"]
+                form_rangeunit = request.form["range_unit"]
+                range_string = form_rangenumber + " " + form_rangeunit
                 
             else:
                 form_rangenumber = -1
@@ -168,10 +170,6 @@ def addspell():
             else:
                 form_materials = "NULL"
 
-            if form_mcomp == 1 and form_materials == "":
-                errorcheck = True
-                error = "Please state material components"
-
             ##Description
             form_desc = request.form["spell_desc"]
 
@@ -189,7 +187,7 @@ def addspell():
                 SpellName = form_name,
                 SpellLevel = form_level,
                 CastingTime = ctime_string,
-                Range = new_spell_range,
+                Range = range_string,
                 Duration = duration_string,
                 Concentration = spl_concentration,
                 owner = current_user(),
@@ -202,11 +200,9 @@ def addspell():
                 Materials = form_materials,
                 Ritual = form_ritual,
             )
-            if errorcheck = False:
-                db.session.add(new_spell)
-                db.session.commit()
-            else:
-                #Flash error message
+
+            db.session.add(new_spell)
+            db.session.commit()
 
             return redirect("/spells")
     else:

@@ -2,7 +2,7 @@
 {% block body %}
 <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
 
-<table id="schoolsTable">
+<table id="schoolsTable" class="w3-table-all w3-centered">
     <tr>
         <th id="hideschools" colspan="3" onclick="schoolToggle()" class='noselect'>Filter by School <i id="arrow" class="arrow up"></i></th>
     </tr>
@@ -21,9 +21,9 @@
         <th><a href="/spells/{{ source }}/8" class='noselect'>Transmutation</a></th>
         <th><a href="/spells/{{ source }}/9" class='noselect'>Other</a></th>
     </tr>
-</table>
+</table> 
 
-<table class="sortable" id="spellsTable">
+<table class="sortable w3-table-all" id="spellsTable">
     <thead>
         <tr>
             <th class='noselect'>Name</th>
