@@ -1,22 +1,26 @@
 {% extends 'userbase.html' %}
 {% block body %}
-
-<h1>LOGIN</h1>
+<div class="w3-container w3-teal">
+    <h1>LOGIN</h1>
+</div>
 <desc style="color: red;">{{ error }}</desc>
-<form action="/login" method="POST">
-    <table>
-        <tr>
-            <label for="username">Username: </label>
-            <input type="text" name="login_username" id="username" value="{{new_user.username}}">
-            <br>
-            <label for="password">Password: </label>
-            <input type="password" name="login_password" id="password">
-            <br>
-            <input type="submit" value="Login">
-        </tr>
-    </table>
-</form>
-<a href="/createuser">Create Account</a>
-<a href="/">Return to contents</a>
+<div class="w3-container">
+    <form action="/login" method="POST">
+        <table>
+            <tr>
+                <label for="username">Username: </label>
+                <input type="text" name="login_username" id="username" value="{{new_user.username}}" class="w3-input w3-border w3-light-grey">
+                <br>
+                <label for="password">Password: </label>
+                <input type="password" name="login_password" id="password" class="w3-input w3-border w3-light-grey">
+                <br>
+                <input type="submit" value="Login" class="w3-btn w3-blue-grey">
+            </tr>
+        </table>
+    </form><br>
+
+    <a href="/createuser" class="w3-btn w3-blue-grey">Create Account</a><br><br>
+    <a href="/" class="w3-btn w3-blue-grey">Return to contents</a>
+</div>
 
 {% endblock body %}

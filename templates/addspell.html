@@ -1,139 +1,145 @@
 {% extends 'addbase.html' %}
 {% block body %}
-<form action="/addspell" method="POST" class="w3-container">
-<table class="spellAddTable">
-    <tr>
-        <th><label for="name"><b>Name</b></label></th>
-        <th><label for="level"><b>Level</b></label></th>
-        <th><label for="school"><b>School</b></th></label>
-    </tr>
-    <tr>
-        <th><input id="name" type="text" name="spell_name" class="w3-input w3-border" autofocus></th>
-        <th><input id="level" type="number" name="spell_level" class="w3-input w3-border" min="0" max="9" class="numberInput"></th>
-        <th><select id="school" type="text" name="spell_school" class="w3-select w3-border" list="schools">
-            {% for school in schools %}
-                <option value="{{ school.SchoolName }}">{{ school.SchoolName }}</option>
-            {% endfor %}
-            <option value="--" selected>--</option>
-        </select></th>
-    </tr>
-</table>
-<br>
-<table class="spellAddTable">
-    <tr>
-        <th><label for="school"><b>Casting Time</b></label></th>
-    </tr>
-    <tr>
-        <th><input id="castingtime" type="number" name="casting_time" class="w3-input w3-border" min="0" max="999" value="0" class="numberInput"></th>
-        <th><select id="castingtime_unit" type="text" name="casting_time_unit" class="w3-select w3-border">
-            {% set ctimes = ["Action", "Bonus Action", "Hour(s)", "Minute(s)", "Instantaneous", "Reaction", "Special"] %}
-            {% for ctime in ctimes %}
-                <option value="{{ ctime }}">{{ ctime }}</option>
-            {% endfor %}
-            <option value="--" selected>--</option>
-        </select></th>
-    </tr>
-</table>
-<br>
-<table class="spellAddTable">
-    <tr>
-        <th><label for="range_type"><b>Range</b></label></th>
-        <th><b>Ranged Distance</b></th>
-    </tr>
-    <tr>
-        <th><select id="range_type" type="text" name="range_type" class="w3-select w3-border">
-            {% set ranges = ["Self", "Touch", "Ranged", "Sight", "Unlimited"] %}
-            {% for range in ranges %}
-                <option value="{{ range }}">{{ range }}</option>
-            {% endfor %}
-            <option value="--" selected>--</option>
-        </select></th>
-        <th><input id="range_number_value" type="number" name="range_number_value" min="0" class="w3-input w3-border"></th>
-        <th><select id="range_unit" type="text" name="range_unit" class="w3-select w3-border">
-            {% set units = ["Feet (ft.)", "Miles (mi.)"] %}
-            {% for unit in units %}
-                <option value="{{ unit }}">{{ unit }}</option>
-            {% endfor %}
-            <option value="--" selected>--</option>
-        </select></th>
-    </tr>
-</table>
-<br>
-<table class="spellAddTable">
-    <tr>
-        <th><b>Duration Type</b></th>
-        <th><label for="duration"><b>Duration</b></label></th>
-    </tr>
-    <tr>
-        <th><select id="duration_type" type="text" name="duration_type" class="w3-select w3-border">
-            {% set units = ["Concentration", "Instantaneous", "Special", "Time", "Until Dispelled", "Until Dispelled or Triggered"] %}
-            {% for unit in units %}
-                <option value="{{ unit }}">{{ unit }}</option>
-            {% endfor %}
-                <option value="NULL" selected>--</option>
-        </select></th>
-        <th><input id="duration" type="number" name="spell_duration" min="0" class="w3-input w3-border"></th>
-        <th><select id="duration_time_unit" type="text" name="duration_time_unit" class="w3-select w3-border">
-            {% set units = ["Round(s)", "Minute(s)", "Hour(s)", "Day(s)"] %}
-            {% for unit in units %}
-                <option value="{{ unit }}">{{ unit }}</option>
-            {% endfor %}
-                <option value="NULL" selected>--</option>
-        </select></th>
-    </tr>
-</table>
-<br>
-<table class="spellAddTable">
-    <tr>
-        <th><b>Components</b></th>
-    </tr>
-        <input type="hidden" name="v_component" value="0">
-        <tr><td><input type="checkbox" id="v" name="v_component" value="1" class="w3-check w3-border">
-        <label for="v"> (V) Verbal <abbr title="The Verbal component requires the spellcaster be able to verbally speak while casting the spell">?</abbr></label></td></tr>
-        
-
-        <input type="hidden" name="s_component" value="0">
-        <tr><td><input type="checkbox" id="s" name="s_component" value="1" class="w3-check w3-border">
-        <label for="s"> (S) Somatic <abbr title="The Somatic component requires the spellcaster be able to make a physical motion while casting the spell">?</abbr></label></td></tr>
-        
-        
-        <input type="hidden" name="m_component" value="0">
-        <tr><td><input type="checkbox" id="m" name="m_component" value="1" class="w3-check w3-border">
-        <label for="m"> (M) Material <abbr title="The Material component requires the spellcaster to consume a specified material to cast the spell">?</abbr></label></td></tr>
-        
+<div class="w3-container w3-teal">
+    <h1>CREATE SPELL</h1>
+</div>
+<div class="w3-container">
+    <form action="/addspell" method="POST">
+    <table class="spellAddTable">
         <tr>
-            <th><b>Material Components</b></th>
+            <th><label for="name"><b>Name</b></label></th>
+            <th><label for="level"><b>Level</b></label></th>
+            <th><label for="school"><b>School</b></th></label>
         </tr>
         <tr>
-            <th><input type=text id="materials" name="materials" class="w3-input w3-border" disabled></th>
-        </tr>   
-</table>
-<br>
-<div>
-    <label for="desc"><b>Description</b></label>
-    <textarea id="desc" type="text" name="spell_desc" class="w3-input w3-border"></textarea>
-</div>
-<div>
-    <label for="rit"><b>Ritual?</b></label>
-    <input type="hidden" name="ritual" value="0" >
-    <input type="checkbox" name="ritual" id="rit" value="1" class="w3-check w3-border">
-</div>
-<br>
-<div>  
-    <label for="source_select"><b>Source</b></label>
-    <select id="source_select" type="text" name="spell_source" list="sources" class="w3-select w3-border">
-        {% for source in sources %}
-            <option value="{{ source.SourceName }}">{{ source.SourceName }}</option>
-        {% endfor %}
-    </select>
-</div>
+            <th><input id="name" type="text" name="spell_name" class="w3-input w3-border" autofocus></th>
+            <th><input id="level" type="number" name="spell_level" class="w3-input w3-border" min="0" max="9" class="numberInput"></th>
+            <th><select id="school" type="text" name="spell_school" class="w3-select w3-border" list="schools">
+                {% for school in schools %}
+                    <option value="{{ school.SchoolName }}">{{ school.SchoolName }}</option>
+                {% endfor %}
+                <option value="--" selected>--</option>
+            </select></th>
+        </tr>
+    </table>
+    <br>
+    <table class="spellAddTable">
+        <tr>
+            <th><label for="school"><b>Casting Time</b></label></th>
+        </tr>
+        <tr>
+            <th><input id="castingtime" type="number" name="casting_time" class="w3-input w3-border" min="0" max="999" value="0" class="numberInput"></th>
+            <th><select id="castingtime_unit" type="text" name="casting_time_unit" class="w3-select w3-border">
+                {% set ctimes = ["Action", "Bonus Action", "Hour(s)", "Minute(s)", "Instantaneous", "Reaction", "Special"] %}
+                {% for ctime in ctimes %}
+                    <option value="{{ ctime }}">{{ ctime }}</option>
+                {% endfor %}
+                <option value="--" selected>--</option>
+            </select></th>
+        </tr>
+    </table>
+    <br>
+    <table class="spellAddTable">
+        <tr>
+            <th><label for="range_type"><b>Range</b></label></th>
+            <th><b>Ranged Distance</b></th>
+        </tr>
+        <tr>
+            <th><select id="range_type" type="text" name="range_type" class="w3-select w3-border">
+                {% set ranges = ["Self", "Touch", "Ranged", "Sight", "Unlimited"] %}
+                {% for range in ranges %}
+                    <option value="{{ range }}">{{ range }}</option>
+                {% endfor %}
+                <option value="--" selected>--</option>
+            </select></th>
+            <th><input id="range_number_value" type="number" name="range_number_value" min="0" class="w3-input w3-border"></th>
+            <th><select id="range_unit" type="text" name="range_unit" class="w3-select w3-border">
+                {% set units = ["Feet (ft.)", "Miles (mi.)"] %}
+                {% for unit in units %}
+                    <option value="{{ unit }}">{{ unit }}</option>
+                {% endfor %}
+                <option value="--" selected>--</option>
+            </select></th>
+        </tr>
+    </table>
+    <br>
+    <table class="spellAddTable">
+        <tr>
+            <th><b>Duration Type</b></th>
+            <th><label for="duration"><b>Duration</b></label></th>
+        </tr>
+        <tr>
+            <th><select id="duration_type" type="text" name="duration_type" class="w3-select w3-border">
+                {% set units = ["Concentration", "Instantaneous", "Special", "Time", "Until Dispelled", "Until Dispelled or Triggered"] %}
+                {% for unit in units %}
+                    <option value="{{ unit }}">{{ unit }}</option>
+                {% endfor %}
+                    <option value="NULL" selected>--</option>
+            </select></th>
+            <th><input id="duration" type="number" name="spell_duration" min="0" class="w3-input w3-border"></th>
+            <th><select id="duration_time_unit" type="text" name="duration_time_unit" class="w3-select w3-border">
+                {% set units = ["Round(s)", "Minute(s)", "Hour(s)", "Day(s)"] %}
+                {% for unit in units %}
+                    <option value="{{ unit }}">{{ unit }}</option>
+                {% endfor %}
+                    <option value="NULL" selected>--</option>
+            </select></th>
+        </tr>
+    </table>
+    <br>
+    <table class="spellAddTable">
+        <tr>
+            <th><b>Components</b></th>
+        </tr>
+            <input type="hidden" name="v_component" value="0">
+            <tr><td><input type="checkbox" id="v" name="v_component" value="1" class="w3-check w3-border">
+            <label for="v"> (V) Verbal <abbr title="The Verbal component requires the spellcaster be able to verbally speak while casting the spell">?</abbr></label></td></tr>
+            
 
-<input type="submit" value="Add">
-</form>
-
-<form action="/spells">
-    <input type="submit" value="Cancel">
-</form>
+            <input type="hidden" name="s_component" value="0">
+            <tr><td><input type="checkbox" id="s" name="s_component" value="1" class="w3-check w3-border">
+            <label for="s"> (S) Somatic <abbr title="The Somatic component requires the spellcaster be able to make a physical motion while casting the spell">?</abbr></label></td></tr>
+            
+            
+            <input type="hidden" name="m_component" value="0">
+            <tr><td><input type="checkbox" id="m" name="m_component" value="1" class="w3-check w3-border">
+            <label for="m"> (M) Material <abbr title="The Material component requires the spellcaster to consume a specified material to cast the spell">?</abbr></label></td></tr>
+            
+            <tr>
+                <th><b>Material Components</b></th>
+            </tr>
+            <tr>
+                <th><input type=text id="materials" name="materials" class="w3-input w3-border" disabled></th>
+            </tr>   
+    </table>
+    <br>
+    <div>
+        <label for="desc"><b>Description</b></label>
+        <textarea id="desc" type="text" name="spell_desc" class="w3-input w3-border"></textarea>
+    </div>
+    <div>
+        <label for="rit"><b>Ritual?</b></label>
+        <input type="hidden" name="ritual" value="0" >
+        <input type="checkbox" name="ritual" id="rit" value="1" class="w3-check w3-border">
+    </div>
+    <br>
+    <div>  
+        <label for="source_select"><b>Source</b></label>
+        <select id="source_select" type="text" name="spell_source" list="sources" class="w3-select w3-border">
+            {% for source in sources %}
+                <option value="{{ source.SourceName }}">{{ source.SourceName }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <br>
+    <input type="submit" value="Add">
+    </form>
+    <br>
+    <form action="/spells">
+        <input type="submit" value="Cancel">
+    </form>
+    <br>
+</div>
 <script>
 var $rtype = $('#range_type'), $rvalue = $('#range_number_value'), $runit = $('#range_unit');
 $rtype.change(function () {
