@@ -1,7 +1,18 @@
 {% extends 'contents.html' %}
+{% block h1 %}
+    {% if testsource %}
+        Spells - {% for sources in testsource %}{% if source == 1 %}Official{% else %}Homebrew{% endif %}{% endfor %}
+    {% endif %}
+{% endblock %}
 {% block body %}
 <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
-
+<div class="addnew">
+    {% if current_user %}
+        <a class="w3-btn w3-round-xxlarge w3-teal w3-hover-pale-green" href="/addspell">Add new spell</a>
+    {% else %}
+        <p>Log in to add new additions</p>
+    {% endif %}
+</div>
 <table id="schoolsTable" class="w3-table-all w3-centered">
     <tr>
         <th id="hideschools" colspan="3" onclick="schoolToggle()" class='noselect'>Filter by School <i id="arrow" class="arrow up"></i></th>

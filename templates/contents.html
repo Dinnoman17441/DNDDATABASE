@@ -1,41 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="=X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <script src="https://www.w3schools.com/lib/w3.js"></script>
-    <title>Contents</title>
-</head>
-<body>
-    <nav>
-        <ul id = "navlist">
-            {% if current_user %}
-                <li class="navth"><p>{{('Logged in as {}'.format(current_user.username))}}</p></li>
-            {% else %}
-                <li class="navth"><a href="/login">Login</a></li>
-            {% endif %}
-            <li class="navth"><a href="/createuser">Create an account</a></li>
-            <li class="navth" id='logout'><a href="/logout">Logout</a></li>
-        </ul>
-    </nav>
-    <div class="addnew">
-        {% if current_user %}
-            <a href="/addspell">Add new spell</a>
-        {% else %}
-            <p>Log in to add new additions</p>
-        {% endif %}
-    </div>
+{% extends 'base.html' %}
+{% block h1 %}
+    Spells
+{% endblock %}
+{% block body %}
+
     <table id="sourceTable">
         <tr>
-            <th><a href="/spells/1">Official</a></th>
-            <th><a href="/spells/2">Homebrew</a></th>
+            <th class="w3-btn w3-round-xxlarge w3-teal w3-hover-pale-green"><a href="/spells/1">Official</a></th>
+            <th class="w3-btn w3-round-xxlarge w3-teal w3-hover-pale-green"><a href="/spells/2">Homebrew</a></th>
         </tr>
     </table>
-    <div class="content">
-        {% block body %}
-        {% endblock body %}
-    </div>
-</body>
+
+{% endblock %}

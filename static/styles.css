@@ -90,7 +90,7 @@ nav li a:hover {
   text-align: left;
 }
 
-#addnew {
+.addnew {
   align-content: center;
   margin: auto;
   text-align: center;
