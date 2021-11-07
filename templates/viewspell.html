@@ -1,69 +1,71 @@
-{% extends "contents.html" %}
-{% block head %}
-{% for spell in spells %}
-    <title>{{ spell.SpellName }}</title>
-{% endfor %}
-{% endblock head %}
+{% extends 'base.html' %}
+{% block h1 %}
+    Spells
+{% endblock %}
 
 
 {% block body %}
 {% for spell in spells %}
-    <h1>{{ spell.SpellName }}</h1>
-    <p>{{ spell.source.SourceName }}</p>
+    <div class='w3-container'>
+        <h1><u>{{ spell.SpellName }}</u></h1>
+        <p><i>{{ spell.source.SourceName }}</i></p>
 
-    {% if spell.SpellLevel == 0 %}
-        <p>{{ spell.school.SchoolName }} Cantrip</p>
-    {% elif spell.SpellLevel == 1 %}
-        <p>{{ spell.SpellLevel }}st-level {{ spell.school.SchoolName }}</p>
-    {% elif spell.SpellLevel == 2 %}
-        <p>{{ spell.SpellLevel }}nd-level {{ spell.school.SchoolName }}</p>
-    {% elif spell.SpellLevel == 3 %}
-        <p>{{ spell.SpellLevel }}rd-level {{ spell.school.SchoolName }}</p>
-    {% else %}
-        <p>{{ spell.SpellLevel }}th-level {{ spell.school.SchoolName }}</p>
-    {% endif %}
+        {% if spell.SpellLevel == 0 %}
+            <p><i>{{ spell.school.SchoolName }} Cantrip</i></p>
+        {% elif spell.SpellLevel == 1 %}
+            <p><i>{{ spell.SpellLevel }}st-level {{ spell.school.SchoolName }}</i></p>
+        {% elif spell.SpellLevel == 2 %}
+            <p><i>{{ spell.SpellLevel }}nd-level {{ spell.school.SchoolName }}</i></p>
+        {% elif spell.SpellLevel == 3 %}
+            <p><i>{{ spell.SpellLevel }}rd-level {{ spell.school.SchoolName }}</i></p>
+        {% else %}
+            <p><i>{{ spell.SpellLevel }}th-level {{ spell.school.SchoolName }}</i></p>
+        {% endif %}
 
-    <p><b>Casting Time:</b> {{ spell.CastingTime }}</p>
-    <p><b>Range:</b> {{ spell.Range }}</p>
+        <p><b>Casting Time:</b> {{ spell.CastingTime }}</p>
+        <p><b>Range:</b> {{ spell.Range }}</p>
 
-    {% if spell.V == 1 and spell.S == 1 and spell.M == 1 %}
-        <p><b>Components:</b> V, S, M</p>
-    {% elif spell.V == 1 and spell.S == 1 and spell.M == 0 %}
-        <p><b>Components:</b> V, S</p>
-    {% elif spell.V == 1 and spell.S == 0 and spell.M == 1 %}
-        <p><b>Components:</b> V, M</p>
-    {% elif spell.V == 0 and spell.S == 1 and spell.M == 1 %}
-        <p><b>Components:</b> S, M</p>
-    {% elif spell.V == 1 and spell.S == 0 and spell.M == 0 %}
-        <p><b>Components:</b> V</p>
-    {% elif spell.V == 0 and spell.S == 1 and spell.M == 0 %}
-        <p><b>Components:</b> S</p>
-    {% elif spell.V == 0 and spell.S == 0 and spell.M == 1 %}
-        <p><b>Components:</b> M</p>
-    {% else %}
-        <p><b>Components:</b> None</p>
-    {% endif %}
+        {% if spell.V == 1 and spell.S == 1 and spell.M == 1 %}
+            <p><b>Components:</b> V, S, M</p>
+        {% elif spell.V == 1 and spell.S == 1 and spell.M == 0 %}
+            <p><b>Components:</b> V, S</p>
+        {% elif spell.V == 1 and spell.S == 0 and spell.M == 1 %}
+            <p><b>Components:</b> V, M</p>
+        {% elif spell.V == 0 and spell.S == 1 and spell.M == 1 %}
+            <p><b>Components:</b> S, M</p>
+        {% elif spell.V == 1 and spell.S == 0 and spell.M == 0 %}
+            <p><b>Components:</b> V</p>
+        {% elif spell.V == 0 and spell.S == 1 and spell.M == 0 %}
+            <p><b>Components:</b> S</p>
+        {% elif spell.V == 0 and spell.S == 0 and spell.M == 1 %}
+            <p><b>Components:</b> M</p>
+        {% else %}
+            <p><b>Components:</b> None</p>
+        {% endif %}
 
 
-    {% if spell.Concentration == 0 %}
-        <p><b>Duration:</b> {{ spell.Duration }}</p>
-    {% else %}
-        <p><b>Duration:</b> Concentration, {{ spell.Duration }}</p>
-    {% endif %}
-    
-    <p>{{ spell.Description }}</p>
+        {% if spell.Concentration == 0 %}
+            <p><b>Duration:</b> {{ spell.Duration }}</p>
+        {% else %}
+            <p><b>Duration:</b> Concentration, {{ spell.Duration }}</p>
+        {% endif %}
+        
+        <p>{{ spell.Description }}</p>
+        
+        <p><b>At Higher Levels: </b>{{ spell.AtHigherLevels }}</p>
 
-    {% if current_user == spell.owner %}
-        <form action="/deletespell/{{ spell.SpellID }}" method="GET">
-            <input type="submit" value="Delete">
-    {% endif %}
+        {% if current_user == spell.owner %}
+            <form action="/deletespell/{{ spell.SpellID }}" method="GET">
+                <input type="submit" value="Delete">
+            </form>
+        {% endif %}
 
-    <br>
+        <br>
 
-    <form action="/spells/{{ spell.source.SourceID }}">
-        <input type="submit" value="Back">
-    </form>
-
+            <form action="/spells/{{ spell.source.SourceID }}">
+                <input type="submit" value="Back">
+            </form>
+    </div>
 {% endfor %}
 
 

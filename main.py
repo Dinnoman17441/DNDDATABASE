@@ -126,7 +126,11 @@ def addspell():
             form_castingtime = request.form["casting_time"]
             form_castingtimeunit = request.form["casting_time_unit"]
 
-            ctime_string = form_castingtime + " " + form_castingtimeunit
+            ctime_list = ['Instantaneous', 'Reaction', 'Bonus Action']
+            if form_castingtimeunit in ctime_list:
+                ctime_string = form_castingtimeunit
+            else:
+                ctime_string = form_castingtime + " " + form_castingtimeunit
 
             ##Range
             form_rangetype = request.form["range_type"]
@@ -173,6 +177,8 @@ def addspell():
 
             ##Description
             form_desc = request.form["spell_desc"]
+            form_athl = request.form["spell_athl"]
+
 
             ##Ritual
             form_ritual = request.form["ritual"]
@@ -195,6 +201,7 @@ def addspell():
                 school = school_id,
                 source = source_id,
                 Description = form_desc,
+                AtHigherLevels = form_athl,
                 V = form_vcomp,
                 S = form_scomp,
                 M = form_mcomp,

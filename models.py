@@ -19,6 +19,7 @@ class Spell(db.Model):
     Materials = db.Column(db.String)
     Duration = db.Column(db.String) 
     Description = db.Column(db.String)
+    AtHigherLevels = db.Column(db.String)
     Concentration = db.Column(db.Integer)
     Ritual = db.Column(db.Integer)
 
@@ -41,6 +42,7 @@ class Source(db.Model):
     SourceName = db.Column(db.String)
 
 db.create_all()
+#db.session.commit()
 
 
 '''

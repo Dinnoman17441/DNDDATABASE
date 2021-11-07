@@ -16,7 +16,7 @@
         <h1>{% block h1 %}{% endblock %}</h1>
     </div>
     <nav>
-        <ul id = "navlist">
+        <ul id="navlist" class='w3-container'>
             {% if current_user %}
                 <li class="navth"><p>{{('Logged in as {}'.format(current_user.username))}}</p></li>
             {% else %}
